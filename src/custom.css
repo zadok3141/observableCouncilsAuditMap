@@ -1,0 +1,220 @@
+@import url("observablehq:default.css");
+@import url("observablehq:theme-air.css");
+
+/* Base styles and variables */
+:root {
+    /* Fonts */
+    --monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+    --serif: Georgia, "Times New Roman", Times, serif;
+    --sans-serif: Verdana, FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+
+    /* Typography */
+    --monospace-font: 16px/1.428571429 var(--monospace);
+    --theme-font: 16px/1.5 var(--sans-serif);
+
+    /* Colors */
+    --theme-foreground: #333333;
+    --theme-foreground-focus: #511e26;
+    --theme-background-a: #ffffff;
+    --theme-background-b: color-mix(in srgb, var(--theme-foreground) 4%, var(--theme-background-a));
+    --theme-background: var(--theme-background-a);
+    --theme-background-alt: var(--theme-background-b);
+    --theme-foreground-alt: color-mix(in srgb, var(--theme-foreground) 90%, var(--theme-background-a));
+    --theme-foreground-muted: color-mix(in srgb, var(--theme-foreground) 60%, var(--theme-background-a));
+    --theme-foreground-faint: color-mix(in srgb, var(--theme-foreground) 50%, var(--theme-background-a));
+    --theme-foreground-fainter: color-mix(in srgb, var(--theme-foreground) 30%, var(--theme-background-a));
+    --theme-foreground-faintest: color-mix(in srgb, var(--theme-foreground) 14%, var(--theme-background-a));
+
+    color-scheme: light;
+}
+
+/* Base elements */
+body {
+    font: var(--theme-font);
+}
+
+/* Observable blocks */
+div.observablehq--block {
+    &:has(select) {
+        margin: 0;
+        background: var(--theme-background-alt);
+        border: solid 1px var(--theme-foreground-faintest);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        font: var(--theme-font);
+
+        & > div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+
+            & > * {
+                flex: 1 1 clamp(150px, 30%, 400px);
+                display: flex;
+                flex-direction: column;
+
+                & label {
+                    width: 100%;
+                }
+            }
+        }
+
+        & > :first-child,
+        & > :first-child > :first-child {
+            margin-top: 0;
+        }
+
+        & > :last-child,
+        & > :last-child > :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    & select {
+        height: calc(5 * 1.5em) !important;
+        max-height: calc(5 * 1.5em) !important;
+        overflow-y: auto;
+    }
+}
+
+/* Map elements */
+.leaflet-popup-content {
+    max-height: 495px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+/* Field tables for prototype.md */
+.field-table {
+    margin-bottom: 1rem;
+    flex: 1 1 300px;
+}
+
+/* Make sure the Observable tables in field-table have proper styling */
+#field_tables_container {
+    .field-table table,
+    .field-table .observablehq--table {
+        width: 100%;
+    }
+}
+
+/* Field tables container for prototype.md */
+.field-tables-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Reset button container styling */
+.reset-button-container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    button {
+        margin: 0 auto;
+    }
+}
+
+/* Note toggle functionality */
+#note1_toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+
+    &:focus-visible ~ #note1_div label {
+        outline: 2px solid #4A90E2;
+        outline-offset: 2px;
+    }
+
+    &:focus-visible ~ #note1_div label::before {
+        content: "Press Space to toggle";
+        position: absolute;
+        font-size: 0.8em;
+        top: -2em;
+        left: 0;
+        background: white;
+        color: var(--theme-foreground);
+        padding: 0.2em 0.5em;
+        border-radius: 3px;
+        border: 1px solid var(--theme-foreground-faint);
+    }
+
+    &:checked ~ #note1_div {
+        & ul {
+            max-height: 200px;
+        }
+
+        & label::after {
+            content: " ▲";
+        }
+    }
+}
+
+#note1_div {
+    width: 100%;
+    max-width: unset;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    cursor: default;
+    transition: all 0.3s ease;
+    border-left: 1rem solid #511e26;
+
+    &:before {
+        content: "";
+        display: initial;
+        margin-bottom: 0;
+    }
+
+    & ul {
+        max-height: 0;
+        max-width: unset;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        margin: 0;
+    }
+
+    & li {
+        max-width: 95%;
+        margin: 0;
+    }
+
+    & label {
+        display: block;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+
+        &::after {
+            content: " ▼";
+            margin-left: 0.5em;
+        }
+    }
+}
+
+/* Make checkboxes in table always visible overriding the theme styles. */
+
+#field_tables_container, #table_div {
+    td, th {
+        input[type="checkbox"] {
+            opacity: inherit;
+        }
+    }
+}
+
+#observablehq-center {
+    margin-top: 0;
+}
+
+#observablehq-footer {
+    margin-top: 0;
+    color: var(--theme-foreground);
+}

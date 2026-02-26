@@ -9,6 +9,7 @@ backstop_data/bitmaps_test/
 
 # Large LINZ dataset (~500MB, user downloads separately)
 scripts/nz-addresses.csv
+files/lds-nz-addresses-CSV.zip
 /scripts/__pycache__/
 
 # LibreOffice lock files

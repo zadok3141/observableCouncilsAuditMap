@@ -1,0 +1,1202 @@
+[
+  {
+    "council": "Kapiti Coast District Council",
+    "raw_address": "175 Rimu Road\nParaparaumu Paraparaumu\nNew Zealand",
+    "current": {
+      "lat": -40.8565761,
+      "lng": 175.1939626
+    },
+    "address_geocoded": {
+      "lat": -40.91556672,
+      "lng": 175.0032812
+    },
+    "distance_m": 17354.5,
+    "nominatim_display": "175 Rimu Road, Paraparaumu",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Hutt City Council",
+    "raw_address": "30 Laings Road\nLower Hutt Lower Hutt 5040\nNew Zealand",
+    "current": {
+      "lat": -41.1262955,
+      "lng": 175.0677118
+    },
+    "address_geocoded": {
+      "lat": -41.2116886,
+      "lng": 174.90275982
+    },
+    "distance_m": 16779.7,
+    "nominatim_display": "28 Laings Road, Hutt Central, Lower Hutt",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "West Coast Regional Council",
+    "raw_address": "388 Main South Rd\nGreymouth Greymouth 7805\nNew Zealand",
+    "current": {
+      "lat": -42.4504,
+      "lng": 171.2108
+    },
+    "address_geocoded": {
+      "lat": -42.49886325,
+      "lng": 171.17413693
+    },
+    "distance_m": 6170.1,
+    "nominatim_display": "389 Main South Road, Paroa, Greymouth",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Clutha District Council",
+    "raw_address": "1 Rosebank Terrace\nBalclutha Balclutha 9240\nNew Zealand",
+    "current": {
+      "lat": -46.2352,
+      "lng": 169.7314
+    },
+    "address_geocoded": {
+      "lat": -46.2484542,
+      "lng": 169.71851412
+    },
+    "distance_m": 1777.1,
+    "nominatim_display": "1 Rosebank Terrace, Balclutha",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Environment Southland (Southland Regional Council)",
+    "raw_address": "202 North Road\nWaikiwi\nInvercargill Invercargill\nNew Zealand",
+    "current": {
+      "lat": -46.3701274,
+      "lng": 168.3473024
+    },
+    "address_geocoded": {
+      "lat": -46.38067962,
+      "lng": 168.3470941
+    },
+    "distance_m": 1173.1,
+    "nominatim_display": "200 North Road, Waikiwi, Invercargill",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Tauranga City Council",
+    "raw_address": "91 Willow Street\nTauranga Tauranga\nNew Zealand",
+    "current": {
+      "lat": -37.6866836,
+      "lng": 176.1697014
+    },
+    "address_geocoded": {
+      "lat": -37.68267552,
+      "lng": 176.16864093
+    },
+    "distance_m": 454.6,
+    "nominatim_display": "91 Willow Street, Tauranga",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Environment Canterbury Regional Council",
+    "raw_address": "200 Tuam Street\nChristchurch Christchurch 8053\nNew Zealand",
+    "current": {
+      "lat": -43.5321,
+      "lng": 172.6362
+    },
+    "address_geocoded": {
+      "lat": -43.53553217,
+      "lng": 172.63869843
+    },
+    "distance_m": 431.5,
+    "nominatim_display": "200 Tuam Street, Christchurch Central, Christchurch",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Palmerston North City Council",
+    "raw_address": "The Square\nPalmerston North Palmerston North\nNew Zealand",
+    "current": {
+      "lat": -40.3523,
+      "lng": 175.6118
+    },
+    "address_geocoded": {
+      "lat": -40.35596997,
+      "lng": 175.61139662
+    },
+    "distance_m": 409.0,
+    "nominatim_display": "[median of 123 addresses on street]",
+    "method": "linz_city_fullname",
+    "status": "red"
+  },
+  {
+    "council": "Wellington City Council",
+    "raw_address": "113 The Terrace\nWellington Wellington 6140\nNew Zealand",
+    "current": {
+      "lat": -41.2865,
+      "lng": 174.7762
+    },
+    "address_geocoded": {
+      "lat": -41.2831236,
+      "lng": 174.77493218
+    },
+    "distance_m": 389.7,
+    "nominatim_display": "113 The Terrace, Wellington Central, Wellington",
+    "method": "linz_city_fullname",
+    "status": "red"
+  },
+  {
+    "council": "Hastings District Council",
+    "raw_address": "Lyndon Road East\nHastings Hastings\nNew Zealand",
+    "current": {
+      "lat": -39.6452917,
+      "lng": 176.8424633
+    },
+    "address_geocoded": {
+      "lat": -39.64241481,
+      "lng": 176.83987637
+    },
+    "distance_m": 389.0,
+    "nominatim_display": "[median of 147 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Kaipara District Council",
+    "raw_address": "42 Hokianga Road\nDargaville Dargaville 0310\nNew Zealand",
+    "current": {
+      "lat": -35.9420867,
+      "lng": 173.8697539
+    },
+    "address_geocoded": {
+      "lat": -35.94030453,
+      "lng": 173.8667702
+    },
+    "distance_m": 334.0,
+    "nominatim_display": "42 Hokianga Road, Dargaville",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Ruapehu District Council",
+    "raw_address": "Huia Street\nTaumarunui Taumarunui\nNew Zealand",
+    "current": {
+      "lat": -38.8828,
+      "lng": 175.2617
+    },
+    "address_geocoded": {
+      "lat": -38.88555988,
+      "lng": 175.26092512
+    },
+    "distance_m": 313.7,
+    "nominatim_display": "[median of 51 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Mackenzie District Council",
+    "raw_address": "Main Street\nFairlie Fairlie 7949\nNew Zealand",
+    "current": {
+      "lat": -44.0981,
+      "lng": 170.8289
+    },
+    "address_geocoded": {
+      "lat": -44.100649715,
+      "lng": 170.82921081
+    },
+    "distance_m": 284.4,
+    "nominatim_display": "[median of 60 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Bay of Plenty Regional Council",
+    "raw_address": "87 First Avenue\nTauranga Whakatane 3110\nNew Zealand",
+    "current": {
+      "lat": -37.6873287,
+      "lng": 176.1699317
+    },
+    "address_geocoded": {
+      "lat": -37.6876422,
+      "lng": 176.16694227
+    },
+    "distance_m": 266.0,
+    "nominatim_display": "87B First Avenue, Tauranga",
+    "method": "linz_city_partial",
+    "status": "red"
+  },
+  {
+    "council": "Grey District Council",
+    "raw_address": "105 Tainui Street\nGreymouth Greymouth\nNew Zealand",
+    "current": {
+      "lat": -42.4504,
+      "lng": 171.2108
+    },
+    "address_geocoded": {
+      "lat": -42.45246375,
+      "lng": 171.20970458
+    },
+    "distance_m": 246.3,
+    "nominatim_display": "105 Tainui Street, Greymouth",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Central Otago District Council",
+    "raw_address": "William Fraser Building\n1 Dunorling Street\nAlexandra Alexandra 9320\nNew Zealand",
+    "current": {
+      "lat": -45.2553765,
+      "lng": 169.3918401
+    },
+    "address_geocoded": {
+      "lat": -45.25672455,
+      "lng": 169.389591
+    },
+    "distance_m": 231.5,
+    "nominatim_display": "1 Dunorling Street, Alexandra",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Whanganui District Council",
+    "raw_address": "101 Guyton Street\nWanganui Wanganui\nNew Zealand",
+    "current": {
+      "lat": -39.9309,
+      "lng": 175.0479
+    },
+    "address_geocoded": {
+      "lat": -39.93275225,
+      "lng": 175.04880725
+    },
+    "distance_m": 219.8,
+    "nominatim_display": "101 Guyton Street, Whanganui",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "South Waikato District Council",
+    "raw_address": "Torphin Crescent\nTokoroa Tokoroa\nNew Zealand",
+    "current": {
+      "lat": -38.2203368,
+      "lng": 175.8737962
+    },
+    "address_geocoded": {
+      "lat": -38.221824405,
+      "lng": 175.872330665
+    },
+    "distance_m": 209.1,
+    "nominatim_display": "[median of 46 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Waikato Regional Council",
+    "raw_address": "160 Ward Street\nHamilton Central\nHamilton Hamilton 3204\nNew Zealand",
+    "current": {
+      "lat": -37.787,
+      "lng": 175.2793
+    },
+    "address_geocoded": {
+      "lat": -37.78832787,
+      "lng": 175.27793617
+    },
+    "distance_m": 190.1,
+    "nominatim_display": "161 Ward Street, Hamilton Central, Hamilton",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Invercargill City Council",
+    "raw_address": "101 Esk Street\nInvercargill Invercargill 9810\nNew Zealand",
+    "current": {
+      "lat": -46.4132,
+      "lng": 168.3538
+    },
+    "address_geocoded": {
+      "lat": -46.41198655,
+      "lng": 168.3521818
+    },
+    "distance_m": 183.5,
+    "nominatim_display": "101 Esk Street, Invercargill",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "New Plymouth District Council",
+    "raw_address": "Liardet Street\nNew Plymouth New Plymouth\nNew Zealand",
+    "current": {
+      "lat": -39.0592551,
+      "lng": 174.0765919
+    },
+    "address_geocoded": {
+      "lat": -39.057721785,
+      "lng": 174.076304065
+    },
+    "distance_m": 172.0,
+    "nominatim_display": "[median of 42 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Buller District Council",
+    "raw_address": "Brougham House\n6-8 Brougham Street\nWestport Westport 7866\nNew Zealand",
+    "current": {
+      "lat": -41.7543,
+      "lng": 171.6006
+    },
+    "address_geocoded": {
+      "lat": -41.75519988,
+      "lng": 171.59944983
+    },
+    "distance_m": 138.3,
+    "nominatim_display": "7 Brougham Street, Westport",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Hamilton City Council",
+    "raw_address": "Municipal Office Building\nGarden Place\nHamilton Hamilton\nNew Zealand",
+    "current": {
+      "lat": -37.7881657,
+      "lng": 175.2809108
+    },
+    "address_geocoded": {
+      "lat": -37.7874297,
+      "lng": 175.28213308
+    },
+    "distance_m": 135.1,
+    "nominatim_display": "[median of 13 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Matamata-Piako District Council",
+    "raw_address": "35 Kenrick Street\nTe Aroha Te Aroha\nNew Zealand",
+    "current": {
+      "lat": -37.5434,
+      "lng": 175.7103
+    },
+    "address_geocoded": {
+      "lat": -37.54439252,
+      "lng": 175.71086827
+    },
+    "distance_m": 121.1,
+    "nominatim_display": "35 Kenrick Street, Te Aroha",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Gisborne District Council",
+    "raw_address": "Fitzherbert Street\nGisborne Gisborne\nNew Zealand",
+    "current": {
+      "lat": -38.6653066,
+      "lng": 178.0297253
+    },
+    "address_geocoded": {
+      "lat": -38.664858275,
+      "lng": 178.030949765
+    },
+    "distance_m": 117.6,
+    "nominatim_display": "[median of 14 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Rangitikei District Council",
+    "raw_address": "46 High Street\nMarton Marton\nNew Zealand",
+    "current": {
+      "lat": -40.0675,
+      "lng": 175.3755
+    },
+    "address_geocoded": {
+      "lat": -40.06816025,
+      "lng": 175.3746396
+    },
+    "distance_m": 103.7,
+    "nominatim_display": "46 High Street, Marton",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Stratford District Council",
+    "raw_address": "Miranda Street\nStratford Stratford\nNew Zealand",
+    "current": {
+      "lat": -39.3406925,
+      "lng": 174.2830931
+    },
+    "address_geocoded": {
+      "lat": -39.341123315,
+      "lng": 174.284117525
+    },
+    "distance_m": 100.4,
+    "nominatim_display": "[median of 140 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Hawke's Bay Regional Council",
+    "raw_address": "102 Vautier Street\nNapier Napier\nNew Zealand",
+    "current": {
+      "lat": -39.4932709,
+      "lng": 176.9166395
+    },
+    "address_geocoded": {
+      "lat": -39.49377612,
+      "lng": 176.91574893
+    },
+    "distance_m": 94.9,
+    "nominatim_display": "102 Vautier Street, Napier South, Napier",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Napier City Council",
+    "raw_address": "Civic Buildings\nHastings Street\nNapier Napier\nNew Zealand",
+    "current": {
+      "lat": -39.492066,
+      "lng": 176.918107
+    },
+    "address_geocoded": {
+      "lat": -39.492829775000004,
+      "lng": 176.9180949
+    },
+    "distance_m": 84.8,
+    "nominatim_display": "[median of 218 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Western Bay Of Plenty District Council",
+    "raw_address": "Barkes Corner\n1484 Cameron Road\nGreerton\nTauranga Tauranga 3112\nNew Zealand",
+    "current": {
+      "lat": -37.7345902,
+      "lng": 176.1253045
+    },
+    "address_geocoded": {
+      "lat": -37.73422867,
+      "lng": 176.12449505
+    },
+    "distance_m": 81.9,
+    "nominatim_display": "1484 Cameron Road, Greerton, Tauranga",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Ashburton District Council",
+    "raw_address": "Cnr Havelock & Baring Streets\nAshburton Ashburton\nNew Zealand",
+    "current": {
+      "lat": -43.9039671,
+      "lng": 171.750066
+    },
+    "address_geocoded": {
+      "lat": -43.904187410000006,
+      "lng": 171.74910376
+    },
+    "distance_m": 81.1,
+    "nominatim_display": "[median of 134 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Hauraki District Council",
+    "raw_address": "William Street\nPaeroa Paeroa\nNew Zealand",
+    "current": {
+      "lat": -37.3787131,
+      "lng": 175.6684826
+    },
+    "address_geocoded": {
+      "lat": -37.37900291,
+      "lng": 175.66768738
+    },
+    "distance_m": 77.4,
+    "nominatim_display": "[median of 3 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Porirua City Council",
+    "raw_address": "Administration Building\nCobham Court\nPorirua Porirua\nNew Zealand",
+    "current": {
+      "lat": -41.1350184,
+      "lng": 174.8395035
+    },
+    "address_geocoded": {
+      "lat": -41.13543095,
+      "lng": 174.84014724000002
+    },
+    "distance_m": 70.9,
+    "nominatim_display": "[median of 16 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Selwyn District Council",
+    "raw_address": "2 Norman Kirk Drive\n10 Gorge Rd\nRolleston Rolleston 7643\nNew Zealand",
+    "current": {
+      "lat": -43.5917393,
+      "lng": 172.3839737
+    },
+    "address_geocoded": {
+      "lat": -43.59232913,
+      "lng": 172.38423445
+    },
+    "distance_m": 68.8,
+    "nominatim_display": "2 Norman Kirk Drive, Rolleston",
+    "method": "linz_city_multiline",
+    "status": "red"
+  },
+  {
+    "council": "Rotorua District Council",
+    "raw_address": "1061 Haupapa Street\nRotorua Rotorua 3010\nNew Zealand",
+    "current": {
+      "lat": -38.13563,
+      "lng": 176.2551995
+    },
+    "address_geocoded": {
+      "lat": -38.1360921,
+      "lng": 176.2547136
+    },
+    "distance_m": 66.7,
+    "nominatim_display": "1072 Haupapa Street, Rotorua",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Kawerau District Council",
+    "raw_address": "Ranfurly Court\nKawerau Kawerau 3127\nNew Zealand",
+    "current": {
+      "lat": -38.0863671,
+      "lng": 176.7019282
+    },
+    "address_geocoded": {
+      "lat": -38.08660632,
+      "lng": 176.70132778
+    },
+    "distance_m": 59.0,
+    "nominatim_display": "[median of 5 addresses on street]",
+    "method": "linz_city",
+    "status": "red"
+  },
+  {
+    "council": "Tasman District Council",
+    "raw_address": "189 Queen Street\nRichmond\nTasman Tasman 7050\nNew Zealand",
+    "current": {
+      "lat": -41.3419945,
+      "lng": 173.1868806
+    },
+    "address_geocoded": {
+      "lat": -41.34154777,
+      "lng": 173.18687997
+    },
+    "distance_m": 49.6,
+    "nominatim_display": "189 Queen Street, Richmond",
+    "method": "linz_city_extra",
+    "status": "amber"
+  },
+  {
+    "council": "Upper Hutt City Council",
+    "raw_address": "Civic Administration Building\n838 - 842 Fergusson Drive\nUpper Hutt Upper Hutt\nNew Zealand",
+    "current": {
+      "lat": -41.126295,
+      "lng": 175.067712
+    },
+    "address_geocoded": {
+      "lat": -41.12594075,
+      "lng": 175.06797438
+    },
+    "distance_m": 45.1,
+    "nominatim_display": "842 Fergusson Drive, Upper Hutt Central, Upper Hutt",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Horowhenua District Council",
+    "raw_address": "126 Oxford Street\nLevin Levin 5510\nNew Zealand",
+    "current": {
+      "lat": -40.6249981,
+      "lng": 175.284027
+    },
+    "address_geocoded": {
+      "lat": -40.62519447,
+      "lng": 175.28357093
+    },
+    "distance_m": 44.3,
+    "nominatim_display": "126 Oxford Street, Levin",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Gore District Council",
+    "raw_address": "Civic Centre\n29 Bowler Avenue\nGore Gore 9710\nNew Zealand",
+    "current": {
+      "lat": -46.102549,
+      "lng": 168.9416144
+    },
+    "address_geocoded": {
+      "lat": -46.10222728,
+      "lng": 168.94176103
+    },
+    "distance_m": 37.5,
+    "nominatim_display": "29 Bowler Avenue, Gore",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Manawatu-Wanganui Regional Council (Horizons)",
+    "raw_address": "11-15 Victoria Avenue\nPalmerston North Palmerston North\nNew Zealand",
+    "current": {
+      "lat": -40.34938545777998,
+      "lng": 175.6183803528062
+    },
+    "address_geocoded": {
+      "lat": -40.34955179,
+      "lng": 175.61799839
+    },
+    "distance_m": 37.3,
+    "nominatim_display": "11 Victoria Avenue, Palmerston North",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Waimakariri District Council",
+    "raw_address": "215 High Street\nRangiora Rangiora\nNew Zealand",
+    "current": {
+      "lat": -43.3042593,
+      "lng": 172.5924229
+    },
+    "address_geocoded": {
+      "lat": -43.3039256,
+      "lng": 172.59240632
+    },
+    "distance_m": 37.1,
+    "nominatim_display": "215 High Street, Rangiora",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Greater Wellington Regional Council",
+    "raw_address": "Wgtn Regional Council House\nShed 39, 2 Fryatt Quay, Pipitea\nWellington Wellington 6011\nNew Zealand",
+    "current": {
+      "lat": -41.2776659,
+      "lng": 174.7857846
+    },
+    "address_geocoded": {
+      "lat": -41.2773896,
+      "lng": 174.7859646
+    },
+    "distance_m": 34.2,
+    "nominatim_display": "2 Fryatt Quay, Pipitea, Wellington",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Timaru District Council",
+    "raw_address": "2 King George Place\nTimaru Timaru 7940\nNew Zealand",
+    "current": {
+      "lat": -44.3977358,
+      "lng": 171.2525042
+    },
+    "address_geocoded": {
+      "lat": -44.39757632,
+      "lng": 171.25281558
+    },
+    "distance_m": 30.5,
+    "nominatim_display": "2 King George Place, Timaru",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Dunedin City Council",
+    "raw_address": "Civic Centre\n50 The Octagon\nDunedin Dunedin 9240\nNew Zealand",
+    "current": {
+      "lat": -45.8732912,
+      "lng": 170.5037334
+    },
+    "address_geocoded": {
+      "lat": -45.87353408,
+      "lng": 170.50365342
+    },
+    "distance_m": 27.7,
+    "nominatim_display": "50A The Octagon, Dunedin Central, Dunedin",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Queenstown-Lakes District Council",
+    "raw_address": "Civic Centre\n10 Gorge Rd\nQueenstown Queenstown 9300\nNew Zealand",
+    "current": {
+      "lat": -45.0292169,
+      "lng": 168.6615695
+    },
+    "address_geocoded": {
+      "lat": -45.02898767,
+      "lng": 168.66159595
+    },
+    "distance_m": 25.6,
+    "nominatim_display": "10 Gorge Road, Queenstown",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Marlborough District Council",
+    "raw_address": "15-21 Seymour Street\nBlenheim Blenheim\nNew Zealand",
+    "current": {
+      "lat": -41.5114773,
+      "lng": 173.9549673
+    },
+    "address_geocoded": {
+      "lat": -41.51128108,
+      "lng": 173.9548305
+    },
+    "distance_m": 24.6,
+    "nominatim_display": "15 Seymour Street, Blenheim",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Christchurch City Council",
+    "raw_address": "53 Hereford Street\nChristchurch Christchurch 8013\nNew Zealand",
+    "current": {
+      "lat": -43.5317393,
+      "lng": 172.6317369
+    },
+    "address_geocoded": {
+      "lat": -43.53190412,
+      "lng": 172.63162525
+    },
+    "distance_m": 20.4,
+    "nominatim_display": "53 Hereford Street, Christchurch Central, Christchurch",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Tararua District Council",
+    "raw_address": "26 Gordon Street\nDannevirke Dannevirke 4942\nNew Zealand",
+    "current": {
+      "lat": -40.2100175,
+      "lng": 176.0996214
+    },
+    "address_geocoded": {
+      "lat": -40.20985645,
+      "lng": 176.0996077
+    },
+    "distance_m": 17.9,
+    "nominatim_display": "26 Gordon Street, Dannevirke",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Hurunui District Council",
+    "raw_address": "66 Carters Rd\nAmberley Amberley 7410\nNew Zealand",
+    "current": {
+      "lat": -43.1518833,
+      "lng": 172.7291827
+    },
+    "address_geocoded": {
+      "lat": -43.15197017,
+      "lng": 172.7293625
+    },
+    "distance_m": 17.5,
+    "nominatim_display": "66 Carters Road, Amberley",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Otago Regional Council",
+    "raw_address": "Regional House\n70 Stafford Street\nDunedin Dunedin\nNew Zealand",
+    "current": {
+      "lat": -45.8804447,
+      "lng": 170.4959482
+    },
+    "address_geocoded": {
+      "lat": -45.8802931,
+      "lng": 170.49596148
+    },
+    "distance_m": 16.9,
+    "nominatim_display": "70 Stafford Street, Dunedin Central, Dunedin",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Auckland Council",
+    "raw_address": "ASB Building\n135 Albert Street\nAuckland Central\nAuckland Auckland 1010\nNew Zealand",
+    "current": {
+      "lat": -36.8499216,
+      "lng": 174.7624529
+    },
+    "address_geocoded": {
+      "lat": -36.85003308,
+      "lng": 174.76257788
+    },
+    "distance_m": 16.7,
+    "nominatim_display": "135 Albert Street, Auckland Central, Auckland",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "South Wairarapa District Council",
+    "raw_address": "19 Kitchener Street\nMartinborough Martinborough\nNew Zealand",
+    "current": {
+      "lat": -41.2168861,
+      "lng": 175.4573932
+    },
+    "address_geocoded": {
+      "lat": -41.21681368,
+      "lng": 175.45756577
+    },
+    "distance_m": 16.6,
+    "nominatim_display": "19 Kitchener Street, Martinborough",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Far North District Council",
+    "raw_address": "Memorial Avenue\nKaikohe Kaikohe 0440\nNew Zealand",
+    "current": {
+      "lat": -35.4096521,
+      "lng": 173.8006771
+    },
+    "address_geocoded": {
+      "lat": -35.40954845,
+      "lng": 173.80061581500001
+    },
+    "distance_m": 12.8,
+    "nominatim_display": "[median of 12 addresses on street]",
+    "method": "linz_city",
+    "status": "amber"
+  },
+  {
+    "council": "Manawatu District Council",
+    "raw_address": "135 Manchester Street\nFeilding Horowhenua 4743\nNew Zealand",
+    "current": {
+      "lat": -40.2232286,
+      "lng": 175.5624512
+    },
+    "address_geocoded": {
+      "lat": -40.22331098,
+      "lng": 175.56237392
+    },
+    "distance_m": 11.3,
+    "nominatim_display": "135 Manchester Street, Feilding",
+    "method": "linz_city_partial",
+    "status": "amber"
+  },
+  {
+    "council": "Nelson City Council",
+    "raw_address": "Civic House\n110 Trafalgar Street\nNelson Nelson\nNew Zealand",
+    "current": {
+      "lat": -41.2711369,
+      "lng": 173.2836926
+    },
+    "address_geocoded": {
+      "lat": -41.27120038,
+      "lng": 173.28371372
+    },
+    "distance_m": 7.3,
+    "nominatim_display": "110 Trafalgar Street, Nelson",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Westland District Council",
+    "raw_address": "36 Weld Street\nHokitika Hokitika\nNew Zealand",
+    "current": {
+      "lat": -42.7182497,
+      "lng": 170.9643108
+    },
+    "address_geocoded": {
+      "lat": -42.71821412,
+      "lng": 170.96425175
+    },
+    "distance_m": 6.2,
+    "nominatim_display": "36 Weld Street, Hokitika",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Waitaki District Council",
+    "raw_address": "20 Thames Street\nOamaru Oamaru\nNew Zealand",
+    "current": {
+      "lat": -45.101012,
+      "lng": 170.9688921
+    },
+    "address_geocoded": {
+      "lat": -45.10103212,
+      "lng": 170.96890847
+    },
+    "distance_m": 2.6,
+    "nominatim_display": "20 Thames Street, Oamaru",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Masterton District Council",
+    "raw_address": "161 Queen Street\nMasterton Masterton 5810\nNew Zealand",
+    "current": {
+      "lat": -40.950493,
+      "lng": 175.6608773
+    },
+    "address_geocoded": {
+      "lat": -40.95049302,
+      "lng": 175.66087725
+    },
+    "distance_m": 0.0,
+    "nominatim_display": "161 Queen Street, Masterton",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Southland District Council",
+    "raw_address": "15 Forth Street\nInvercargill Invercargill 9810\nNew Zealand",
+    "current": {
+      "lat": -46.41468,
+      "lng": 168.3466362
+    },
+    "address_geocoded": {
+      "lat": -46.41468002,
+      "lng": 168.34663615
+    },
+    "distance_m": 0.0,
+    "nominatim_display": "15 Forth Street, Invercargill",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Thames-Coromandel District Council",
+    "raw_address": "515 Mackay Street\nThames Thames 3500\nNew Zealand",
+    "current": {
+      "lat": -37.1382363,
+      "lng": 175.5431807
+    },
+    "address_geocoded": {
+      "lat": -37.13823628,
+      "lng": 175.54318073
+    },
+    "distance_m": 0.0,
+    "nominatim_display": "515 Mackay Street, Thames",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Waipa District Council",
+    "raw_address": "101 Bank Street\nTe Awamutu Te Awamutu\nNew Zealand",
+    "current": {
+      "lat": -38.0106532,
+      "lng": 175.323508
+    },
+    "address_geocoded": {
+      "lat": -38.01065322,
+      "lng": 175.32350797
+    },
+    "distance_m": 0.0,
+    "nominatim_display": "101 Bank Street, Te Awamutu",
+    "method": "linz_city",
+    "status": "green"
+  },
+  {
+    "council": "Carterton District Council",
+    "raw_address": "Halloway Street\nCarterton Carterton 5743\nNew Zealand",
+    "current": {
+      "lat": -41.0252097,
+      "lng": 175.5279615
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Central Hawke's Bay District Council",
+    "raw_address": "Ruataniwha Street\n4-6 Brougham Street\nWaipawa Waipawa 7866\nNew Zealand",
+    "current": {
+      "lat": -39.9440977,
+      "lng": 176.584584
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Chatham Islands Council",
+    "raw_address": "Tuku Rd\nChatham Islands Chatham Islands 5743\nNew Zealand",
+    "current": {
+      "lat": -43.9515809,
+      "lng": -176.5606042
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Kaikoura District Council",
+    "raw_address": "Level 2, 96 West End\nKaikoura Kaikoura 7300\nNew Zealand",
+    "current": {
+      "lat": -42.4028102,
+      "lng": 173.6825449
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Northland Regional Council",
+    "raw_address": "36 Water Street\nWhangarei Whangarei 0148\nNew Zealand",
+    "current": {
+      "lat": -35.7257497,
+      "lng": 174.3177798
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Opotiki District Council",
+    "raw_address": "108 St John Street\nOpotiki Opotiki\nNew Zealand",
+    "current": {
+      "lat": -38.005359,
+      "lng": 177.2873628
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Otorohanga District Council",
+    "raw_address": "17 Maniapoto Street\nOtorohanga Otorohanga\nNew Zealand",
+    "current": {
+      "lat": -38.1854989,
+      "lng": 175.2121915
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "South Taranaki District Council",
+    "raw_address": "Albion Street\nHawera Hawera\nNew Zealand",
+    "current": {
+      "lat": -39.5927,
+      "lng": 174.2822
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Taranaki Regional Council",
+    "raw_address": "47 Cloton Road\nStratford Stratford\nNew Zealand",
+    "current": {
+      "lat": -39.3356,
+      "lng": 174.2837
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Taupo District Council",
+    "raw_address": "Level 1, 107 Heu Heu Street\nTaupo Taupo 3330\nNew Zealand",
+    "current": {
+      "lat": -38.6877378,
+      "lng": 176.0734385
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Waikato District Council",
+    "raw_address": "15 Galileo Street\nNgaruawahia Ngaruawahia\nNew Zealand",
+    "current": {
+      "lat": -37.6697,
+      "lng": 175.3082
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Waimate District Council",
+    "raw_address": "Local Government Centre\nWaimate Waimate\nNew Zealand",
+    "current": {
+      "lat": -44.7346023,
+      "lng": 171.0462346
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Wairoa District Council",
+    "raw_address": "Coronation Square\nWairoa Wairoa\nNew Zealand",
+    "current": {
+      "lat": -39.0342334,
+      "lng": 177.4230544
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Waitomo District Council",
+    "raw_address": "Queen Street\nTe Kuiti Te Kuiti\nNew Zealand",
+    "current": {
+      "lat": -38.3376925,
+      "lng": 175.1646256
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Whakatane District Council",
+    "raw_address": "14 Commerce Street\nWhakatane Whakatane 3120\nNew Zealand",
+    "current": {
+      "lat": -37.9526594,
+      "lng": 176.9956763
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  },
+  {
+    "council": "Whangarei District Council",
+    "raw_address": "Forum North Building\nRust Avenue\nWhangarei Whangarei\nNew Zealand",
+    "current": {
+      "lat": -35.7238665,
+      "lng": 174.3171612
+    },
+    "address_geocoded": null,
+    "distance_m": null,
+    "nominatim_display": null,
+    "method": null,
+    "status": "failed"
+  }
+]

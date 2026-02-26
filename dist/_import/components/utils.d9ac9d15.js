@@ -1,7 +1,7 @@
-import * as Inputs from "npm:@observablehq/inputs";
-import _ from "npm:lodash";
-import { icon, layer } from 'npm:@fortawesome/fontawesome-svg-core';
-import { faCircle, faBuildingColumns } from 'npm:@fortawesome/free-solid-svg-icons';
+import * as Inputs from "../../_observablehq/stdlib/inputs.46f60fd4.js";
+import _ from "../../_npm/lodash@4.17.23/dde5ae91.js";
+import { icon, layer } from "../../_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js";
+import { faCircle, faBuildingColumns } from "../../_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js";
 
 const TYPE_COLUMNS = ["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Type 8"];
 

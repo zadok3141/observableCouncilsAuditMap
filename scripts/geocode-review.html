@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Council Geocoding Review</title>
+<style>
+  :root {
+    --green: #27ae60; --amber: #f39c12; --red: #e74c3c;
+    --bg: #f5f6fa; --card-bg: #fff; --border: #dfe6e9;
+    --text: #2d3436; --muted: #636e72;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+  }
+
+  header {
+    background: #1a1a2e; color: #fff; padding: 20px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  header h1 { font-size: 20px; margin-bottom: 12px; }
+  .controls { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .controls label { font-size: 13px; color: #b2bec3; }
+  .controls select {
+    padding: 4px 8px; border-radius: 4px; border: 1px solid #555;
+    background: #2d3436; color: #fff; font-size: 13px;
+  }
+  .summary {
+    margin-left: auto; font-size: 13px; color: #dfe6e9;
+  }
+  .summary .count { font-weight: 600; color: #ffd166; }
+
+  .actions {
+    padding: 12px 24px; background: #fff; border-bottom: 1px solid var(--border);
+    display: flex; gap: 12px; align-items: center;
+    position: sticky; top: 80px; z-index: 99;
+  }
+  .actions button {
+    padding: 8px 16px; border-radius: 6px; border: none;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .btn-export { background: #0984e3; color: #fff; }
+  .btn-export:hover { background: #0773c5; }
+  .btn-all-address { background: #27ae60; color: #fff; }
+  .btn-all-address:hover { background: #219a52; }
+  .btn-all-current { background: #636e72; color: #fff; }
+  .btn-all-current:hover { background: #535c60; }
+
+  main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+  .card {
+    background: var(--card-bg); border-radius: 8px; margin-bottom: 16px;
+    border: 1px solid var(--border); overflow: hidden;
+  }
+  .card-header {
+    padding: 12px 16px; display: flex; justify-content: space-between;
+    align-items: center; border-bottom: 1px solid var(--border);
+  }
+  .card-header h3 { font-size: 15px; }
+  .badge {
+    padding: 2px 8px; border-radius: 10px; font-size: 11px;
+    font-weight: 600; color: #fff; text-transform: uppercase;
+  }
+  .badge-green { background: var(--green); }
+  .badge-amber { background: var(--amber); }
+  .badge-red { background: var(--red); }
+  .badge-failed { background: #636e72; }
+
+  .card-body { padding: 16px; display: flex; gap: 16px; }
+  .card-body.collapsed { display: none; }
+  .card-screenshot { flex: 0 0 300px; }
+  .card-screenshot img {
+    width: 300px; height: 200px; object-fit: cover; border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .card-screenshot .no-img {
+    width: 300px; height: 200px; background: #dfe6e9; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 13px;
+  }
+  .card-details { flex: 1; font-size: 13px; }
+  .card-details dt { font-weight: 600; margin-top: 6px; }
+  .card-details dd { color: var(--muted); margin-bottom: 4px; word-break: break-word; }
+  .card-details .coords { font-family: "SF Mono", Monaco, monospace; font-size: 12px; }
+
+  .radio-group { margin-top: 12px; }
+  .radio-group label {
+    display: block; padding: 4px 0; cursor: pointer; font-size: 13px;
+  }
+  .radio-group input[type="radio"] { margin-right: 6px; }
+  .custom-coords {
+    display: none; margin-top: 4px; margin-left: 20px;
+  }
+  .custom-coords input {
+    width: 100px; padding: 3px 6px; border: 1px solid var(--border);
+    border-radius: 3px; font-size: 12px; margin-right: 4px;
+  }
+
+  .section-toggle {
+    padding: 12px 16px; background: #f0f0f0; border: 1px solid var(--border);
+    border-radius: 8px; margin-bottom: 16px; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: var(--muted);
+  }
+  .section-toggle:hover { background: #e8e8e8; }
+
+  .distance-value { font-weight: 600; }
+  .distance-value.large { color: var(--red); }
+  .distance-value.medium { color: var(--amber); }
+  .distance-value.small { color: var(--green); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Council Geocoding Review</h1>
+  <div class="controls">
+    <div>
+      <label>Distance:</label>
+      <select id="filter-distance">
+        <option value="0">All</option>
+        <option value="10">&gt; 10m</option>
+        <option value="50">&gt; 50m</option>
+        <option value="500">&gt; 500m</option>
+      </select>
+    </div>
+    <div>
+      <label>Status:</label>
+      <select id="filter-status">
+        <option value="all">All</option>
+        <option value="red">Red (&gt;50m)</option>
+        <option value="amber">Amber (10-50m)</option>
+        <option value="green">Green (&lt;10m)</option>
+        <option value="failed">Failed</option>
+      </select>
+    </div>
+    <div class="summary" id="summary"></div>
+  </div>
+</header>
+
+<div class="actions">
+  <button class="btn-export" id="btn-export">Export council-coordinates.json</button>
+  <button class="btn-all-address" id="btn-all-address">Select all: Use address</button>
+  <button class="btn-all-current" id="btn-all-current">Select all: Keep current</button>
+</div>
+
+<main id="council-list"></main>
+
+<script src="geocode-comparison-data.js"></script>
+<script>
+(function() {
+  const data = COMPARISON_DATA;
+  const listEl = document.getElementById('council-list');
+  const summaryEl = document.getElementById('summary');
+  const filterDistance = document.getElementById('filter-distance');
+  const filterStatus = document.getElementById('filter-status');
+
+  // Track selections: council name → {choice: 'current'|'address'|'custom', lat, lng}
+  const selections = {};
+  data.forEach(function(d) {
+    // Default: use address-geocoded if available and status is green, otherwise keep current
+    if (d.address_geocoded && d.status === 'green') {
+      selections[d.council] = { choice: 'address', lat: d.address_geocoded.lat, lng: d.address_geocoded.lng };
+    } else if (d.address_geocoded) {
+      selections[d.council] = { choice: 'current', lat: d.current ? d.current.lat : null, lng: d.current ? d.current.lng : null };
+    } else {
+      selections[d.council] = { choice: 'current', lat: d.current ? d.current.lat : null, lng: d.current ? d.current.lng : null };
+    }
+  });
+
+  function sanitizeFilename(name) {
+    return name.replace(/['\u2019]/g, '').replace(/[^a-zA-Z0-9\-_ ]/g, '').replace(/\s+/g, '_');
+  }
+
+  function formatDistance(m) {
+    if (m == null) return 'N/A';
+    if (m >= 1000) return (m / 1000).toFixed(1) + ' km';
+    return Math.round(m) + ' m';
+  }
+
+  function distanceClass(m) {
+    if (m == null) return '';
+    if (m > 500) return 'large';
+    if (m > 50) return 'large';
+    if (m > 10) return 'medium';
+    return 'small';
+  }
+
+  function render() {
+    var minDist = parseInt(filterDistance.value, 10);
+    var statusFilter = filterStatus.value;
+
+    var filtered = data.filter(function(d) {
+      if (statusFilter !== 'all' && d.status !== statusFilter) return false;
+      if (minDist > 0 && (d.distance_m == null || d.distance_m <= minDist)) return false;
+      return true;
+    });
+
+    var counts = { red: 0, amber: 0, green: 0, failed: 0 };
+    filtered.forEach(function(d) { counts[d.status] = (counts[d.status] || 0) + 1; });
+
+    summaryEl.textContent = '';
+    var showingSpan = document.createElement('span');
+    showingSpan.textContent = 'Showing ';
+    summaryEl.appendChild(showingSpan);
+    var countSpan = document.createElement('span');
+    countSpan.className = 'count';
+    countSpan.textContent = filtered.length + ' of ' + data.length;
+    summaryEl.appendChild(countSpan);
+    var detailSpan = document.createElement('span');
+    detailSpan.textContent = ' councils (' + counts.red + ' red, ' + counts.amber + ' amber, ' + counts.green + ' green, ' + counts.failed + ' failed)';
+    summaryEl.appendChild(detailSpan);
+
+    // Clear and rebuild
+    while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+
+    // Green councils collapsed section
+    var greenItems = filtered.filter(function(d) { return d.status === 'green'; });
+    var otherItems = filtered.filter(function(d) { return d.status !== 'green'; });
+
+    otherItems.forEach(function(d) { listEl.appendChild(createCard(d)); });
+
+    if (greenItems.length > 0) {
+      var toggle = document.createElement('div');
+      toggle.className = 'section-toggle';
+      toggle.textContent = 'Under 10m \u2014 probably fine (' + greenItems.length + ' councils) \u25B6';
+      var greenContainer = document.createElement('div');
+      greenContainer.style.display = 'none';
+      greenItems.forEach(function(d) { greenContainer.appendChild(createCard(d)); });
+      toggle.addEventListener('click', function() {
+        var visible = greenContainer.style.display !== 'none';
+        greenContainer.style.display = visible ? 'none' : 'block';
+        toggle.textContent = 'Under 10m \u2014 probably fine (' + greenItems.length + ' councils) ' + (visible ? '\u25B6' : '\u25BC');
+      });
+      listEl.appendChild(toggle);
+      listEl.appendChild(greenContainer);
+    }
+  }
+
+  function createCard(d) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.id = 'card-' + sanitizeFilename(d.council);
+
+    // Header
+    var header = document.createElement('div');
+    header.className = 'card-header';
+
+    var h3 = document.createElement('h3');
+    h3.textContent = d.council;
+    header.appendChild(h3);
+
+    var badgeContainer = document.createElement('div');
+    var distSpan = document.createElement('span');
+    distSpan.className = 'distance-value ' + distanceClass(d.distance_m);
+    distSpan.textContent = formatDistance(d.distance_m);
+    distSpan.style.marginRight = '8px';
+    badgeContainer.appendChild(distSpan);
+
+    var badge = document.createElement('span');
+    badge.className = 'badge badge-' + d.status;
+    badge.textContent = d.status;
+    badgeContainer.appendChild(badge);
+    header.appendChild(badgeContainer);
+    card.appendChild(header);
+
+    // Body
+    var body = document.createElement('div');
+    body.className = 'card-body';
+
+    // Screenshot
+    var screenshotDiv = document.createElement('div');
+    screenshotDiv.className = 'card-screenshot';
+    if (d.status !== 'green' && d.status !== 'failed') {
+      var img = document.createElement('img');
+      img.src = 'comparison_screenshots/' + sanitizeFilename(d.council) + '.png';
+      img.alt = d.council + ' comparison';
+      img.onerror = function() {
+        var noImg = document.createElement('div');
+        noImg.className = 'no-img';
+        noImg.textContent = 'No screenshot';
+        screenshotDiv.replaceChild(noImg, img);
+      };
+      screenshotDiv.appendChild(img);
+    } else if (d.status === 'failed') {
+      var noImg = document.createElement('div');
+      noImg.className = 'no-img';
+      noImg.textContent = 'Geocoding failed';
+      screenshotDiv.appendChild(noImg);
+    } else {
+      var noImg2 = document.createElement('div');
+      noImg2.className = 'no-img';
+      noImg2.textContent = 'Within 10m';
+      screenshotDiv.appendChild(noImg2);
+    }
+    body.appendChild(screenshotDiv);
+
+    // Details
+    var details = document.createElement('div');
+    details.className = 'card-details';
+
+    var dl = document.createElement('dl');
+
+    addDt(dl, 'Raw address');
+    addDd(dl, d.raw_address.replace(/\n/g, ', '));
+
+    if (d.nominatim_display) {
+      addDt(dl, 'Nominatim resolved');
+      addDd(dl, d.nominatim_display + (d.method ? ' [' + d.method + ']' : ''));
+    }
+
+    addDt(dl, 'Current coords');
+    if (d.current) {
+      var dd1 = document.createElement('dd');
+      dd1.className = 'coords';
+      dd1.textContent = d.current.lat.toFixed(6) + ', ' + d.current.lng.toFixed(6);
+      dl.appendChild(dd1);
+    } else {
+      addDd(dl, 'None');
+    }
+
+    addDt(dl, 'Address-geocoded coords');
+    if (d.address_geocoded) {
+      var dd2 = document.createElement('dd');
+      dd2.className = 'coords';
+      dd2.textContent = d.address_geocoded.lat.toFixed(6) + ', ' + d.address_geocoded.lng.toFixed(6);
+      dl.appendChild(dd2);
+    } else {
+      addDd(dl, 'Failed');
+    }
+
+    details.appendChild(dl);
+
+    // Radio buttons
+    var radioGroup = document.createElement('div');
+    radioGroup.className = 'radio-group';
+    var radioName = 'choice-' + sanitizeFilename(d.council);
+
+    var currentSel = selections[d.council];
+
+    // Keep current
+    if (d.current) {
+      var label1 = document.createElement('label');
+      var radio1 = document.createElement('input');
+      radio1.type = 'radio';
+      radio1.name = radioName;
+      radio1.value = 'current';
+      radio1.checked = currentSel.choice === 'current';
+      radio1.addEventListener('change', function() {
+        selections[d.council] = { choice: 'current', lat: d.current.lat, lng: d.current.lng };
+        customDiv.style.display = 'none';
+      });
+      label1.appendChild(radio1);
+      label1.appendChild(document.createTextNode(' Keep current'));
+      radioGroup.appendChild(label1);
+    }
+
+    // Use address
+    if (d.address_geocoded) {
+      var label2 = document.createElement('label');
+      var radio2 = document.createElement('input');
+      radio2.type = 'radio';
+      radio2.name = radioName;
+      radio2.value = 'address';
+      radio2.checked = currentSel.choice === 'address';
+      radio2.addEventListener('change', function() {
+        selections[d.council] = { choice: 'address', lat: d.address_geocoded.lat, lng: d.address_geocoded.lng };
+        customDiv.style.display = 'none';
+      });
+      label2.appendChild(radio2);
+      label2.appendChild(document.createTextNode(' Use address-geocoded'));
+      radioGroup.appendChild(label2);
+    }
+
+    // Custom
+    var label3 = document.createElement('label');
+    var radio3 = document.createElement('input');
+    radio3.type = 'radio';
+    radio3.name = radioName;
+    radio3.value = 'custom';
+    radio3.checked = currentSel.choice === 'custom';
+    label3.appendChild(radio3);
+    label3.appendChild(document.createTextNode(' Custom lat/lng'));
+    radioGroup.appendChild(label3);
+
+    var customDiv = document.createElement('div');
+    customDiv.className = 'custom-coords';
+    if (currentSel.choice === 'custom') customDiv.style.display = 'block';
+
+    var latInput = document.createElement('input');
+    latInput.type = 'number';
+    latInput.step = '0.000001';
+    latInput.placeholder = 'Latitude';
+    if (currentSel.choice === 'custom' && currentSel.lat) latInput.value = currentSel.lat;
+
+    var lngInput = document.createElement('input');
+    lngInput.type = 'number';
+    lngInput.step = '0.000001';
+    lngInput.placeholder = 'Longitude';
+    if (currentSel.choice === 'custom' && currentSel.lng) lngInput.value = currentSel.lng;
+
+    customDiv.appendChild(latInput);
+    customDiv.appendChild(lngInput);
+
+    radio3.addEventListener('change', function() {
+      selections[d.council] = { choice: 'custom', lat: parseFloat(latInput.value), lng: parseFloat(lngInput.value) };
+      customDiv.style.display = 'block';
+    });
+    latInput.addEventListener('input', function() {
+      if (radio3.checked) selections[d.council].lat = parseFloat(latInput.value);
+    });
+    lngInput.addEventListener('input', function() {
+      if (radio3.checked) selections[d.council].lng = parseFloat(lngInput.value);
+    });
+
+    radioGroup.appendChild(customDiv);
+    details.appendChild(radioGroup);
+    body.appendChild(details);
+    card.appendChild(body);
+
+    return card;
+  }
+
+  function addDt(dl, text) {
+    var dt = document.createElement('dt');
+    dt.textContent = text;
+    dl.appendChild(dt);
+  }
+  function addDd(dl, text) {
+    var dd = document.createElement('dd');
+    dd.textContent = text;
+    dl.appendChild(dd);
+  }
+
+  // Export
+  document.getElementById('btn-export').addEventListener('click', function() {
+    var coords = {};
+    data.forEach(function(d) {
+      var sel = selections[d.council];
+      if (sel && sel.lat != null && sel.lng != null && !isNaN(sel.lat) && !isNaN(sel.lng)) {
+        coords[d.council] = { lat: sel.lat, lng: sel.lng };
+      } else if (d.current) {
+        coords[d.council] = { lat: d.current.lat, lng: d.current.lng };
+      }
+    });
+
+    var json = JSON.stringify(coords, null, 2);
+    var blob = new Blob([json], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'council-coordinates.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Bulk selection buttons
+  document.getElementById('btn-all-address').addEventListener('click', function() {
+    data.forEach(function(d) {
+      if (d.address_geocoded) {
+        selections[d.council] = { choice: 'address', lat: d.address_geocoded.lat, lng: d.address_geocoded.lng };
+      }
+    });
+    render();
+  });
+
+  document.getElementById('btn-all-current').addEventListener('click', function() {
+    data.forEach(function(d) {
+      if (d.current) {
+        selections[d.council] = { choice: 'current', lat: d.current.lat, lng: d.current.lng };
+      }
+    });
+    render();
+  });
+
+  // Filters
+  filterDistance.addEventListener('change', render);
+  filterStatus.addEventListener('change', render);
+
+  // Initial render
+  render();
+})();
+</script>
+</body>
+</html>

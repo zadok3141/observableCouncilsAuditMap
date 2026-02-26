@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Council Coordinate Comparison</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  #title {
+    background: #1a1a2e; color: #fff; padding: 8px 12px;
+    font-size: 14px; display: flex; justify-content: space-between; align-items: center;
+  }
+  #title .name { font-weight: 600; }
+  #title .dist { color: #ffd166; font-size: 13px; }
+  #map { width: 600px; height: 370px; }
+  .legend {
+    background: white; padding: 6px 10px; border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3); font-size: 12px; line-height: 1.6;
+  }
+  .dot {
+    display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+    margin-right: 4px; vertical-align: middle;
+  }
+  .dot-current { background: #3388ff; }
+  .dot-address { background: #e74c3c; }
+</style>
+</head>
+<body>
+<div id="title">
+  <span class="name" id="council-name"></span>
+  <span class="dist" id="distance"></span>
+</div>
+<div id="map"></div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const lat1 = parseFloat(params.get('lat1'));
+const lng1 = parseFloat(params.get('lng1'));
+const lat2 = parseFloat(params.get('lat2'));
+const lng2 = parseFloat(params.get('lng2'));
+const name = params.get('name') || '';
+const dist = params.get('dist') || '';
+
+document.getElementById('council-name').textContent = name;
+document.getElementById('distance').textContent = dist ? dist + 'm difference' : '';
+
+const map = L.map('map', { zoomControl: false });
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '\u00a9 OpenStreetMap'
+}).addTo(map);
+
+// Blue marker = current
+const blueIcon = L.divIcon({
+  className: '',
+  html: '<svg width="24" height="36" viewBox="0 0 24 36"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="#3388ff"/><circle cx="12" cy="12" r="5" fill="white"/></svg>',
+  iconSize: [24, 36],
+  iconAnchor: [12, 36],
+  popupAnchor: [0, -36]
+});
+
+// Red marker = address-geocoded
+const redIcon = L.divIcon({
+  className: '',
+  html: '<svg width="24" height="36" viewBox="0 0 24 36"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="#e74c3c"/><circle cx="12" cy="12" r="5" fill="white"/></svg>',
+  iconSize: [24, 36],
+  iconAnchor: [12, 36],
+  popupAnchor: [0, -36]
+});
+
+if (!isNaN(lat1) && !isNaN(lng1)) {
+  L.marker([lat1, lng1], { icon: blueIcon }).addTo(map).bindPopup('Current');
+}
+if (!isNaN(lat2) && !isNaN(lng2)) {
+  L.marker([lat2, lng2], { icon: redIcon }).addTo(map).bindPopup('Address');
+}
+
+// Dashed line between markers
+if (!isNaN(lat1) && !isNaN(lng1) && !isNaN(lat2) && !isNaN(lng2)) {
+  L.polyline([[lat1, lng1], [lat2, lng2]], {
+    color: '#e74c3c', weight: 2, dashArray: '6, 8', opacity: 0.7
+  }).addTo(map);
+
+  map.fitBounds([[lat1, lng1], [lat2, lng2]], { padding: [50, 50], maxZoom: 17 });
+} else if (!isNaN(lat1) && !isNaN(lng1)) {
+  map.setView([lat1, lng1], 15);
+} else if (!isNaN(lat2) && !isNaN(lng2)) {
+  map.setView([lat2, lng2], 15);
+}
+
+// Legend
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = function() {
+  const div = L.DomUtil.create('div', 'legend');
+
+  const row1 = document.createElement('div');
+  const dot1 = document.createElement('span');
+  dot1.className = 'dot dot-current';
+  row1.appendChild(dot1);
+  row1.appendChild(document.createTextNode(' Current'));
+  div.appendChild(row1);
+
+  const row2 = document.createElement('div');
+  const dot2 = document.createElement('span');
+  dot2.className = 'dot dot-address';
+  row2.appendChild(dot2);
+  row2.appendChild(document.createTextNode(' Address'));
+  div.appendChild(row2);
+
+  return div;
+};
+legend.addTo(map);
+
+// Signal that map is ready (for Puppeteer)
+map.whenReady(function() {
+  setTimeout(function() {
+    document.body.setAttribute('data-map-ready', 'true');
+  }, 1500); // Wait for tiles to load
+});
+</script>
+</body>
+</html>

@@ -961,9 +961,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"OAG School Audits Map@workspace:.":
+"OAG Council Audits Map@workspace:.":
   version: 0.0.0-use.local
-  resolution: "OAG School Audits Map@workspace:."
+  resolution: "OAG Council Audits Map@workspace:."
   dependencies:
     "@observablehq/framework": "npm:^1.13.2"
     backstopjs: "npm:^6.3.25"

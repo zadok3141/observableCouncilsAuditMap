@@ -1,57 +1,58 @@
-# School Audits
+# Council Audits Map
 
-This is an [Observable Framework](https://observablehq.com/framework/) app. To install the required dependencies, run:
+An interactive map of NZ council audit findings, built with [Observable Framework](https://observablehq.com/framework/).
+
+## Getting started
+
+Install dependencies:
 
 ```
 yarn install
 ```
 
-Then, to start the local preview server, run:
+Start the local preview server:
 
 ```
 yarn dev
 ```
 
-Then visit <http://localhost:3000> to preview your app.
+Then visit <http://localhost:3000> to preview the app.
 
-For more, see <https://observablehq.com/framework/getting-started>.
+## Data preprocessing
+
+The raw data source is `Final LG Audit Opinion Dashboard Content.csv`. To regenerate the clean dataset:
+
+```
+python scripts/geocode_councils.py      # produces src/data/council-coordinates.json
+python scripts/preprocess_councils.py   # produces src/data/CouncilsAuditData2025.csv
+```
 
 ## Project structure
 
-A typical Framework project looks like this:
-
 ```ini
 .
+├─ scripts
+│  ├─ geocode_councils.py        # one-time geocoding script
+│  ├─ preprocess_councils.py     # CSV preprocessing script
+│  └─ test_puppeteer.cjs         # Puppeteer test helper
 ├─ src
 │  ├─ components
-│  │  └─ timeline.js           # an importable module
+│  │  └─ utils.js                # map, filter, and table logic
 │  ├─ data
-│  │  ├─ launches.csv.js       # a data loader
-│  │  └─ events.json           # a static data file
-│  ├─ example-dashboard.md     # a page
-│  ├─ example-report.md        # another page
-│  └─ index.md                 # the home page
-├─ .gitignore
-├─ observablehq.config.js      # the app config file
+│  │  ├─ CouncilsAuditData2025.csv    # preprocessed council data
+│  │  └─ council-coordinates.json     # geocoded council locations
+│  ├─ custom.css                 # app styles
+│  └─ index.md                   # the home page
+├─ observablehq.config.js        # the app config file
 ├─ package.json
 └─ README.md
 ```
-
-**`src`** - This is the “source root” — where your source files live. Pages go here. Each page is a Markdown file. Observable Framework uses [file-based routing](https://observablehq.com/framework/project-structure#routing), which means that the name of the file controls where the page is served. You can create as many pages as you like. Use folders to organize your pages.
-
-**`src/index.md`** - This is the home page for your app. You can have as many additional pages as you’d like, but you should always have a home page, too.
-
-**`src/data`** - You can put [data loaders](https://observablehq.com/framework/data-loaders) or static data files anywhere in your source root, but we recommend putting them here.
-
-**`src/components`** - You can put shared [JavaScript modules](https://observablehq.com/framework/imports) anywhere in your source root, but we recommend putting them here. This helps you pull code out of Markdown files and into JavaScript modules, making it easier to reuse code across pages, write tests and run linters, and even share code with vanilla web applications.
-
-**`observablehq.config.js`** - This is the [app configuration](https://observablehq.com/framework/config) file, such as the pages and sections in the sidebar navigation, and the app’s title.
 
 ## Command reference
 
 | Command           | Description                                              |
 | ----------------- | -------------------------------------------------------- |
-| `yarn install`            | Install or reinstall dependencies                        |
+| `yarn install`    | Install or reinstall dependencies                        |
 | `yarn dev`        | Start local preview server                               |
 | `yarn build`      | Build your static site, generating `./dist`              |
 | `yarn deploy`     | Deploy your app to Observable                            |

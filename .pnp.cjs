@@ -11,14 +11,14 @@ const RAW_RUNTIME_STATE =
   ],\
   "dependencyTreeRoots": [\
     {\
-      "name": "OAG School Audits Map",\
+      "name": "OAG Council Audits Map",\
       "reference": "workspace:."\
     }\
   ],\
   "enableTopLevelFallback": true,\
   "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
   "fallbackExclusionList": [\
-    ["OAG School Audits Map", ["workspace:."]]\
+    ["OAG Council Audits Map", ["workspace:."]]\
   ],\
   "fallbackPool": [\
   ],\
@@ -1172,11 +1172,11 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["OAG School Audits Map", [\
+    ["OAG Council Audits Map", [\
       ["workspace:.", {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["OAG School Audits Map", "workspace:."],\
+          ["OAG Council Audits Map", "workspace:."],\
           ["@observablehq/framework", "npm:1.13.2"],\
           ["backstopjs", "npm:6.3.25"],\
           ["d3-dsv", "npm:3.0.1"],\

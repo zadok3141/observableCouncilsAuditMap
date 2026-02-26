@@ -6,3 +6,7 @@ backstop_data/html_report/
 backstop_data/bitmaps_test/
 
 **/.claude/settings.local.json
+
+# Large LINZ dataset (~500MB, user downloads separately)
+scripts/nz-addresses.csv
+/scripts/__pycache__/

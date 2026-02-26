@@ -6,7 +6,7 @@ Fixes:
 1. Duplicate "Description 6" header → rename second to "Description 7"
 2. Missing "Description 8" column → add it
 3. Simplify type headers: strip parenthetical annotations → "Type 1" .. "Type 8"
-4. Fix Buller District Council's empty "Type of audit report" → "Standard"
+4. Fix Buller District Council's empty "Opinion type" → "Incomplete"
 5. Drop the Address column (not needed at runtime)
 6. Add Latitude/Longitude from council-coordinates.json
 7. Fix Hawke's Bay Regional Council's offset data (Other Matter Paragraph
@@ -25,9 +25,12 @@ import os
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-INPUT_CSV = os.path.join(PROJECT_ROOT, "Final LG Audit Opinion Dashboard Content.csv")
-COORDS_JSON = os.path.join(PROJECT_ROOT, "src", "data", "council-coordinates.json")
-OUTPUT_CSV = os.path.join(PROJECT_ROOT, "src", "data", "CouncilsAuditData2025.csv")
+INPUT_CSV = os.path.join(PROJECT_ROOT,
+                         "Final LG Audit Opinion Dashboard Content.csv")
+COORDS_JSON = os.path.join(PROJECT_ROOT, "src", "data",
+                           "council-coordinates.json")
+OUTPUT_CSV = os.path.join(PROJECT_ROOT, "src", "data",
+                          "CouncilsAuditData2025.csv")
 
 
 def fix_headers(raw_headers):
@@ -78,7 +81,7 @@ def fix_hawkes_bay(row):
     # "Other Matter Paragraph" is a type value, not a description
     if desc7 == "Other Matter Paragraph":
         row["Description 7"] = ""
-        row["Type 8"] = desc7       # "Other Matter Paragraph"
+        row["Type 8"] = desc7  # "Other Matter Paragraph"
         row["Description 8"] = type8  # The actual description text
     return row
 
@@ -107,16 +110,20 @@ def main():
     # Fix Buller's missing audit report type
     for row in rows:
         if row.get("Council", "").strip() == "Buller District Council":
-            if not row.get("Type of audit report", "").strip():
-                row["Type of audit report"] = "Standard"
-                print("  Fixed Buller District Council: Type of audit report → Standard")
+            if not row.get("Opinion type", "").strip():
+                row["Opinion type"] = "Incomplete"
+                print(
+                    "  Fixed Buller District Council: Opinion type → Incomplete"
+                )
 
     # Fix Hawke's Bay offset
     for row in rows:
         old_desc7 = row.get("Description 7", "")
         fix_hawkes_bay(row)
         if row.get("Description 7", "") != old_desc7:
-            print("  Fixed Hawke's Bay Regional Council: shifted Other Matter Paragraph data")
+            print(
+                "  Fixed Hawke's Bay Regional Council: shifted Other Matter Paragraph data"
+            )
 
     # Build output
     output_headers = [h for h in fixed_headers if h != "Address"]
@@ -130,7 +137,10 @@ def main():
         if not coord:
             missing_coords.add(name)
 
-        out = {h: row.get(h, "").strip() for h in fixed_headers if h != "Address"}
+        out = {
+            h: row.get(h, "").strip()
+            for h in fixed_headers if h != "Address"
+        }
         out["Latitude"] = str(coord.get("lat", ""))
         out["Longitude"] = str(coord.get("lng", ""))
         output_rows.append(out)

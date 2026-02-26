@@ -16,7 +16,7 @@
 - Added `scripts/preprocess_councils.py` to clean raw CSV (fix duplicate headers,
   missing columns, Hawke's Bay data offset, Buller missing audit type)
 - Extended type filtering from 3 columns (Type 1-3) to 8 columns (Type 1-8)
-- Replaced "Education region" filter with "Type of audit report" (Standard/Non-standard)
+- Replaced "Education region" filter with "Opinion type" (Standard/Non-standard)
 - Popup now groups findings by category (Qualified, Emphasis of Matter, etc.)
 - Changed map icon from school to building-columns
 - Removed school-specific data correction scripts

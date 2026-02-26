@@ -1,9 +1,31 @@
 import * as Inputs from "npm:@observablehq/inputs";
 import _ from "npm:lodash";
-import { icon, layer } from 'npm:@fortawesome/fontawesome-svg-core';
-import { faCircle, faBuildingColumns } from 'npm:@fortawesome/free-solid-svg-icons';
+import {
+    icon,
+    layer
+} from 'npm:@fortawesome/fontawesome-svg-core';
+import {
+    faCheck,
+    faCircle,
+    faBuildingColumns
+} from 'npm:@fortawesome/free-solid-svg-icons';
 
 const TYPE_COLUMNS = ["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Type 8"];
+
+const OPINION_COLORS = {
+    "Standard": "#2e7d32",
+    "Non-standard": "#c62828",
+    "Incomplete": "#1565c0"
+};
+const OPINION_FALLBACK_COLOR = "#757575";
+
+function getOpinionColor(opinionType) {
+    return OPINION_COLORS[opinionType] || OPINION_FALLBACK_COLOR;
+}
+
+const defaultIconCache = new Map();
+const selectedIconCache = new Map();
+const markerDefaultIconMap = new Map();
 
 /**
  * Extract coordinates from a council data item
@@ -13,7 +35,10 @@ const TYPE_COLUMNS = ["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6"
 export function extractCouncilCoordinates(item) {
     // If the item already has processed coordinates, return them
     if (item.validLat !== undefined && item.validLng !== undefined) {
-        return { lat: item.validLat, lng: item.validLng };
+        return {
+            lat: item.validLat,
+            lng: item.validLng
+        };
     }
 
     // Default coordinates deliberately set in the ocean to highlight missing data
@@ -32,12 +57,15 @@ export function extractCouncilCoordinates(item) {
     item.validLat = validLat;
     item.validLng = validLng;
     item.hasRealCoordinates = item.Latitude &&
-                             item.Latitude !== "#N/A" &&
-                             item.Longitude &&
-                             item.Longitude !== "#N/A" &&
-                             !isNaN(lat) && !isNaN(lng);
+        item.Latitude !== "#N/A" &&
+        item.Longitude &&
+        item.Longitude !== "#N/A" &&
+        !isNaN(lat) && !isNaN(lng);
 
-    return { lat: validLat, lng: validLng };
+    return {
+        lat: validLat,
+        lng: validLng
+    };
 }
 
 /**
@@ -134,8 +162,7 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
     if (onSelectionChange) {
         table.addEventListener('input', () => {
             const selectedValues = table.value ?
-                table.value.map(item => item[displayTitle]) :
-                [];
+                table.value.map(item => item[displayTitle]) : [];
             onSelectionChange(fieldName, selectedValues);
         });
     }
@@ -170,9 +197,9 @@ function createCouncilPopupContent(item) {
     parts.push(item["Council"]);
     parts.push('</h1>');
 
-    if (item["Type of audit report"]) {
+    if (item["Opinion type"]) {
         parts.push('<p style="margin: 0 0 8px 0"><strong>');
-        parts.push(item["Type of audit report"]);
+        parts.push(item["Opinion type"]);
         parts.push('</strong></p>');
     }
     if (item["Financial year"]) {
@@ -224,11 +251,14 @@ export function createCouncilMapMarkers(councils, markerLayer, markerReferences,
     // Clear the markerReferences array and marker map
     markerReferences.length = 0;
     councilMarkerMap.clear();
+    markerDefaultIconMap.clear();
 
     councils.forEach(function(item) {
         // Use the pre-processed coordinates directly
-        var marker = L.marker([item.validLat, item.validLng])
+        const defaultIcon = createDefaultIcon(item["Opinion type"]);
+        var marker = L.marker([item.validLat, item.validLng], { icon: defaultIcon })
             .bindPopup(createCouncilPopupContent(item));
+        markerDefaultIconMap.set(marker, defaultIcon);
 
         // Store references to the marker using a unique hash
         markerReferences.push(marker);
@@ -269,22 +299,34 @@ export function renderFilterTables(filteredData, containerId, selectionHandler, 
     tablesContainer.textContent = '';
 
     // Create field tables with preserved selections
-    const filterFields = [
-        { field: "Financial year", title: "Year" },
-        { field: "Type 1", title: "Type" },
-        { field: "Type of audit report", title: "Report Type" }
+    const filterFields = [{
+            field: "Financial year",
+            title: "Year"
+        },
+        {
+            field: "Opinion type",
+            title: "Opinion type"
+        },
+        {
+            field: "Type 1",
+            title: "Type of non-standard paragraph"
+        },
     ];
 
     // Use Lodash forEach for cleaner iteration
-    _.forEach(filterFields, ({ field, title }) => {
+    _.forEach(filterFields, ({
+        field,
+        title
+    }) => {
         const tableDiv = document.createElement('div');
         tableDiv.className = 'field-table';
+        tableDiv.id = 'filter-' + title.toLowerCase().replace(/\s+/g, '-');
 
         // Create the table with all possible values from the complete dataset
         // but show counts from the filtered data
         const table = createFilterableFieldTable(
-            filteredData,  // For counts
-            allData,       // For all possible values
+            filteredData, // For counts
+            allData, // For all possible values
             field,
             title,
             (fieldName, selectedValues) => selectionHandler(fieldName, selectedValues, filterState, refreshCallback),
@@ -312,7 +354,7 @@ export function createDisplayRefresher(councilData, filterState, markerLayer, ma
         // Use Lodash for proper deep cloning of options
         const refreshOptions = _.cloneDeep(displayOptions);
         refreshOptions.refreshCallback = refreshView;
-        refreshOptions.allData = councilData;  // Ensure the complete dataset is available
+        refreshOptions.allData = councilData; // Ensure the complete dataset is available
 
         return refreshFilteredDisplay(councilData, filterState, markerLayer, markerReferences, mapInstance, refreshOptions, filterContainerId);
     };
@@ -334,17 +376,17 @@ export function refreshFilteredDisplay(councilData, filterState, markerLayer, ma
     const filteredCouncils = _.filter(councilData, item => {
         // If no filters are set for a category, it passes that filter
         const yearFilter = filterState["Financial year"].length === 0 ||
-                          filterState["Financial year"].includes(item["Financial year"]);
+            filterState["Financial year"].includes(item["Financial year"]);
 
         // Type filter - exclusive approach (must have ALL selected types)
         const typeFilter = filterState["Type 1"].length === 0 ||
-                          filterState["Type 1"].every(type => {
-                              // Check if this type appears in any of the type fields
-                              return TYPE_COLUMNS.some(col => item[col] === type);
-                          });
+            filterState["Type 1"].every(type => {
+                // Check if this type appears in any of the type fields
+                return TYPE_COLUMNS.some(col => item[col] === type);
+            });
 
-        const reportTypeFilter = filterState["Type of audit report"].length === 0 ||
-                            filterState["Type of audit report"].includes(item["Type of audit report"]);
+        const reportTypeFilter = filterState["Opinion type"].length === 0 ||
+            filterState["Opinion type"].includes(item["Opinion type"]);
 
         return yearFilter && typeFilter && reportTypeFilter;
     });
@@ -354,7 +396,7 @@ export function refreshFilteredDisplay(councilData, filterState, markerLayer, ma
 
     // Update the main table
     const tableDiv = document.getElementById('table_div');
-    tableDiv.textContent = '';  // Clear existing content
+    tableDiv.textContent = ''; // Clear existing content
 
     // Create and add the table display
     tableDiv.appendChild(createSelectableCouncilTable(
@@ -372,37 +414,56 @@ export function refreshFilteredDisplay(councilData, filterState, markerLayer, ma
         updateFilterAndRefresh,
         filterState,
         displayOptions.refreshCallback,
-        displayOptions.allData || councilData  // Pass the complete dataset
+        displayOptions.allData || councilData // Pass the complete dataset
     );
 
     return filteredCouncils;
 }
 
-/**
- * Creates a highlighted icon for selected councils
- * @returns {L.DivIcon} The created icon
- */
-function createHighlightedIcon() {
-    return L.divIcon({
+function createDefaultIcon(opinionType) {
+    const cached = defaultIconCache.get(opinionType);
+    if (cached) return cached;
+
+    const color = getOpinionColor(opinionType);
+    const divIcon = L.divIcon({
         html: layer((push) => {
             push(icon(faCircle, {
-                transform: {
-                    size: 64,
-                    y: -28
-                },
-                styles: {
-                    'color': 'white'
-                }
+                transform: { size: 64, y: -28 },
+                styles: { 'color': color, 'opacity': '0.6' }
             }))
             push(icon(faBuildingColumns, {
-                transform: {
-                    size: 36,
-                    x: -2,
-                    y: -28
-                },
-                styles: {
-                    'color': 'red'
-                }
+                transform: { size: 36, x: -2, y: -28 },
+                styles: { 'color': 'white', 'opacity': '0.85' }
+            }))
+        }).html,
+        className: 'council-marker',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+        popupAnchor: [0, -36]
+    });
+
+    defaultIconCache.set(opinionType, divIcon);
+    return divIcon;
+}
+
+function createSelectedIcon(opinionType) {
+    const cached = selectedIconCache.get(opinionType);
+    if (cached) return cached;
+
+    const color = getOpinionColor(opinionType);
+    const divIcon = L.divIcon({
+        html: layer((push) => {
+            push(icon(faCircle, {
+                transform: { size: 64, y: -28 },
+                styles: { 'color': 'white' }
+            }))
+            push(icon(faBuildingColumns, {
+                transform: { size: 36, x: -2, y: -28 },
+                styles: { 'color': color }
+            }))
+            push(icon(faCheck, {
+                transform: { size: 24, x: 12, y: -16 },
+                styles: { 'color': '#1a1a1a' }
             }))
         }).html,
         className: 'selected-council-marker',
@@ -410,6 +471,9 @@ function createHighlightedIcon() {
         iconAnchor: [12, 12],
         popupAnchor: [0, -36]
     });
+
+    selectedIconCache.set(opinionType, divIcon);
+    return divIcon;
 }
 
 
@@ -423,9 +487,6 @@ function createHighlightedIcon() {
  * @returns {HTMLElement} The created table element
  */
 export function createSelectableCouncilTable(councils, columnConfig, layoutStyle, markerReferences, mapInstance) {
-    // Create the highlighted icon once
-    const highlightedIcon = createHighlightedIcon();
-
     const selection = Inputs.table(councils, {
         columns: columnConfig,
         layout: layoutStyle,
@@ -439,7 +500,7 @@ export function createSelectableCouncilTable(councils, columnConfig, layoutStyle
     selection.addEventListener('input', () => {
         // Reset all markers to default state
         markerReferences.forEach(marker => {
-            marker.setIcon(L.Icon.Default.prototype);
+            marker.setIcon(markerDefaultIconMap.get(marker));
             marker.setZIndexOffset(Math.round(marker.getLatLng().lat)); // Use latitude as default z-index
             marker.closePopup();
         });
@@ -455,7 +516,7 @@ export function createSelectableCouncilTable(councils, columnConfig, layoutStyle
                 const marker = councilMarkerMap.get(uniqueHash);
 
                 if (marker) {
-                    marker.setIcon(highlightedIcon);
+                    marker.setIcon(createSelectedIcon(row["Opinion type"]));
                     marker.setZIndexOffset(1000);
 
                     // Only open popup if exactly one item is selected

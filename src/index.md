@@ -1,6 +1,6 @@
 ---
 toc: false
-title: Council audits UI prototype
+title: 2024/25 Council audit opinions
 ---
 
 ```js
@@ -28,7 +28,7 @@ noteDiv.innerHTML = [
   '<div id="note1_div" class="note">',
   '  <label for="note1_toggle" aria-label="How to use this map (press Space to toggle)">How to use this map</label>',
   '  <ul id="note1_content" aria-labelledby="note1_toggle">',
-  '    <li>Click one or more checkboxes to select Financial years, Types and/or Report types to filter the list of councils.</li>',
+  '    <li>Click one or more checkboxes to select Opinion type, and/or Type of non-standard opinion to filter the list of councils.</li>',
   '    <li>Select one or more councils from the sortable lists on the right of (on a mobile: under) the map. Click on a council\u2019s marker on the map to see what audit findings were raised and why.</li>',
   '    <li>Click on any table heading to sort the data.</li>',
   '  </ul>',
@@ -39,7 +39,7 @@ ftc.parentNode.insertBefore(noteDiv,ftc);
 
 ```js
 // Cell 2: Define configuration options
-const columns = ["Council","Type of audit report","Financial year"];
+const columns = ["Council","Opinion type"];
 const layout = "fixed";
 ```
 
@@ -63,7 +63,7 @@ const councilMarkerReferences = [];
 const filterState = {
     "Financial year": [],
     "Type 1": [],
-    "Type of audit report": []
+    "Opinion type": []
 };
 ```
 
@@ -95,7 +95,7 @@ const resetButton = Inputs.button("Reset filters", {
         // Clear all filter selections
         filterState["Financial year"] = [];
         filterState["Type 1"] = [];
-        filterState["Type of audit report"] = [];
+        filterState["Opinion type"] = [];
 
         // Reset map to default view
         councils_map.setView([-40.9, 175.232], 5);

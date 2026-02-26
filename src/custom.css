@@ -78,6 +78,13 @@ div.observablehq--block {
     }
 }
 
+/* Map marker icons */
+.council-marker,
+.selected-council-marker {
+    background: none;
+    border: none;
+}
+
 /* Map elements */
 .leaflet-popup-content {
     max-height: 495px;
@@ -217,4 +224,11 @@ div.observablehq--block {
 #observablehq-footer {
     margin-top: 0;
     color: var(--theme-foreground);
+}
+
+/* Hide year filter as we only have one year at the moment */
+/* Just remove this to re-enable filtering by year */
+#filter-year {
+    display: none;
+    visibility: hidden;
 }

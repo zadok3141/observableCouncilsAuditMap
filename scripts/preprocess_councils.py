@@ -86,6 +86,24 @@ def fix_hawkes_bay(row):
     return row
 
 
+TYPE_LABEL_MAP = {
+    "Qualified": "Qualified opinion",
+    "Emphasis of Matter": "Emphasis of matter paragraph",
+    "Key Audit Matter": "Key audit matter",
+    "Other Matter Paragraph": "Other matter paragraph",
+}
+
+
+def relabel_types(row):
+    """Rename type values to their display labels."""
+    for i in range(1, 9):
+        key = f"Type {i}"
+        val = row.get(key, "").strip()
+        if val in TYPE_LABEL_MAP:
+            row[key] = TYPE_LABEL_MAP[val]
+    return row
+
+
 def main():
     # Load coordinates
     with open(COORDS_JSON, "r", encoding="utf-8") as f:
@@ -124,6 +142,10 @@ def main():
             print(
                 "  Fixed Hawke's Bay Regional Council: shifted Other Matter Paragraph data"
             )
+
+    # Relabel type values
+    for row in rows:
+        relabel_types(row)
 
     # Build output
     output_headers = [h for h in fixed_headers if h != "Address"]

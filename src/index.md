@@ -7,7 +7,7 @@ title: 2024/25 Council audit opinions
 // Cell 1: Import libraries and load data
 import { icon, layer } from 'npm:@fortawesome/fontawesome-svg-core';
 import { faCircle, faBuildingColumns } from 'npm:@fortawesome/free-solid-svg-icons';
-import { extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables } from './components/utils.js';
+import { extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, mostSeriousFinding } from './components/utils.js';
 // Lodash is already imported in utils.js
 
 // Load the data and pre-process coordinates
@@ -15,6 +15,7 @@ const rawCouncils = await FileAttachment("./data/CouncilsAuditData2025.csv").csv
 // Pre-process all councils to extract coordinates once
 const councils = rawCouncils.map(council => {
   extractCouncilCoordinates(council); // This now stores coordinates on the council object
+  council["Most serious finding"] = mostSeriousFinding(council);
   return council;
 });
 
@@ -28,7 +29,7 @@ noteDiv.innerHTML = [
   '<div id="note1_div" class="note">',
   '  <label for="note1_toggle" aria-label="How to use this map (press Space to toggle)">How to use this map</label>',
   '  <ul id="note1_content" aria-labelledby="note1_toggle">',
-  '    <li>Click one or more checkboxes to select Opinion type, and/or Type of non-standard opinion to filter the list of councils.</li>',
+  '    <li>Click one or more checkboxes to select Opinion type, and/or Type of non-standard paragraph to filter the list of councils.</li>',
   '    <li>Select one or more councils from the sortable lists on the right of (on a mobile: under) the map. Click on a council\u2019s marker on the map to see what audit findings were raised and why.</li>',
   '    <li>Click on any table heading to sort the data.</li>',
   '  </ul>',
@@ -39,7 +40,7 @@ ftc.parentNode.insertBefore(noteDiv,ftc);
 
 ```js
 // Cell 2: Define configuration options
-const columns = ["Council","Opinion type"];
+const columns = ["Council","Opinion type","Most serious finding"];
 const layout = "fixed";
 ```
 

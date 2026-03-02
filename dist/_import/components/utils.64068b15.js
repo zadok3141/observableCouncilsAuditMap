@@ -5,22 +5,71 @@ import {
     layer
 } from "../../_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js";
 import {
-    faCheck,
+    faXmark,
+    faExclamation,
     faCircle,
     faBuildingColumns
 } from "../../_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js";
 
 const TYPE_COLUMNS = ["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Type 8"];
 
-const OPINION_COLORS = {
-    "Standard": "#2e7d32",
-    "Non-standard": "#c62828",
-    "Incomplete": "#1565c0"
-};
-const OPINION_FALLBACK_COLOR = "#757575";
+const FINDING_SEVERITY = [
+    "Qualified opinion",
+    "Key audit matter",
+    "Emphasis of matter paragraph",
+    "Other matter paragraph",
+];
 
-function getOpinionColor(opinionType) {
-    return OPINION_COLORS[opinionType] || OPINION_FALLBACK_COLOR;
+/**
+ * Returns the most serious non-standard finding for a council, or "" if standard.
+ * @param {Object} item - The council data object
+ * @returns {string} The most serious finding label, or ""
+ */
+export function mostSeriousFinding(item) {
+    if (item["Opinion type"] === "Standard" || item["Opinion type"] === "Incomplete") return "";
+    const types = new Set();
+    TYPE_COLUMNS.forEach(col => {
+        if (item[col]) types.add(item[col]);
+    });
+    for (const level of FINDING_SEVERITY) {
+        if (types.has(level)) return level;
+    }
+    return "";
+}
+
+const MARKER_CONFIG = {
+    "standard": {
+        color: "#198754",
+        mark: null,
+        defaultMarkColor: null,
+        selectedMarkColor: null
+    },
+    "incomplete": {
+        color: "#6c757d",
+        mark: null,
+        defaultMarkColor: null,
+        selectedMarkColor: null
+    },
+    "non-standard-qualified": {
+        color: "#dc3545",
+        mark: faXmark,
+        defaultMarkColor: "#1a1a1a",
+        selectedMarkColor: "#dc3545"
+    },
+    "non-standard-unqualified": {
+        color: "#ffc107",
+        mark: faExclamation,
+        defaultMarkColor: "#1a1a1a",
+        selectedMarkColor: "#1a1a1a"
+    }
+};
+
+function getMarkerCategory(item) {
+    const opinionType = item["Opinion type"];
+    if (opinionType === "Standard") return "standard";
+    if (opinionType === "Incomplete") return "incomplete";
+    const hasQualified = TYPE_COLUMNS.some(col => item[col] === "Qualified opinion");
+    return hasQualified ? "non-standard-qualified" : "non-standard-unqualified";
 }
 
 const defaultIconCache = new Map();
@@ -219,10 +268,18 @@ function createCouncilPopupContent(item) {
         }
     }
 
+    // Pluralisation rules for popup headings (all except "Qualified opinion")
+    const PLURAL_MAP = {
+        "Emphasis of matter paragraph": "Emphasis of matter paragraphs",
+        "Key audit matter": "Key audit matters",
+        "Other matter paragraph": "Other matter paragraphs",
+    };
+
     // Render grouped findings
     for (const [category, descriptions] of Object.entries(categories)) {
+        const heading = (descriptions.length > 1 && PLURAL_MAP[category]) ? PLURAL_MAP[category] : category;
         parts.push('<h2 style="margin: 12px 0 4px 0; font-size: 14px; font-weight: bold; border-top: 1px solid #ccc; padding-top: 8px;">');
-        parts.push(category);
+        parts.push(heading);
         parts.push('</h2>');
         descriptions.forEach(desc => {
             parts.push('<p style="margin: 0 0 8px 0">');
@@ -255,8 +312,10 @@ export function createCouncilMapMarkers(councils, markerLayer, markerReferences,
 
     councils.forEach(function(item) {
         // Use the pre-processed coordinates directly
-        const defaultIcon = createDefaultIcon(item["Opinion type"]);
-        var marker = L.marker([item.validLat, item.validLng], { icon: defaultIcon })
+        const defaultIcon = createDefaultIcon(getMarkerCategory(item));
+        var marker = L.marker([item.validLat, item.validLng], {
+                icon: defaultIcon
+            })
             .bindPopup(createCouncilPopupContent(item));
         markerDefaultIconMap.set(marker, defaultIcon);
 
@@ -309,7 +368,7 @@ export function renderFilterTables(filteredData, containerId, selectionHandler, 
         },
         {
             field: "Type 1",
-            title: "Type of non-standard paragraph"
+            title: "Type of non-standard opinion"
         },
     ];
 
@@ -420,21 +479,46 @@ export function refreshFilteredDisplay(councilData, filterState, markerLayer, ma
     return filteredCouncils;
 }
 
-function createDefaultIcon(opinionType) {
-    const cached = defaultIconCache.get(opinionType);
+function createDefaultIcon(category) {
+    const cached = defaultIconCache.get(category);
     if (cached) return cached;
 
-    const color = getOpinionColor(opinionType);
+    const config = MARKER_CONFIG[category];
     const divIcon = L.divIcon({
         html: layer((push) => {
             push(icon(faCircle, {
-                transform: { size: 64, y: -28 },
-                styles: { 'color': color, 'opacity': '0.6' }
+                transform: {
+                    size: 64,
+                    y: -28
+                },
+                styles: {
+                    'color': config.color,
+                    'opacity': '0.6'
+                }
             }))
             push(icon(faBuildingColumns, {
-                transform: { size: 36, x: -2, y: -28 },
-                styles: { 'color': 'white', 'opacity': '0.85' }
+                transform: {
+                    size: 36,
+                    x: -2,
+                    y: -28
+                },
+                styles: {
+                    'color': '#ffffff',
+                    'opacity': '0.85'
+                }
             }))
+            if (config.mark) {
+                push(icon(config.mark, {
+                    transform: {
+                        size: 24,
+                        x: 12,
+                        y: -16
+                    },
+                    styles: {
+                        'color': config.defaultMarkColor
+                    }
+                }))
+            }
         }).html,
         className: 'council-marker',
         iconSize: [24, 24],
@@ -442,29 +526,48 @@ function createDefaultIcon(opinionType) {
         popupAnchor: [0, -36]
     });
 
-    defaultIconCache.set(opinionType, divIcon);
+    defaultIconCache.set(category, divIcon);
     return divIcon;
 }
 
-function createSelectedIcon(opinionType) {
-    const cached = selectedIconCache.get(opinionType);
+function createSelectedIcon(category) {
+    const cached = selectedIconCache.get(category);
     if (cached) return cached;
 
-    const color = getOpinionColor(opinionType);
+    const config = MARKER_CONFIG[category];
     const divIcon = L.divIcon({
         html: layer((push) => {
             push(icon(faCircle, {
-                transform: { size: 64, y: -28 },
-                styles: { 'color': 'white' }
+                transform: {
+                    size: 64,
+                    y: -28
+                },
+                styles: {
+                    'color': 'white'
+                }
             }))
             push(icon(faBuildingColumns, {
-                transform: { size: 36, x: -2, y: -28 },
-                styles: { 'color': color }
+                transform: {
+                    size: 36,
+                    x: -2,
+                    y: -28
+                },
+                styles: {
+                    'color': config.color
+                }
             }))
-            push(icon(faCheck, {
-                transform: { size: 24, x: 12, y: -16 },
-                styles: { 'color': '#1a1a1a' }
-            }))
+            if (config.mark) {
+                push(icon(config.mark, {
+                    transform: {
+                        size: 24,
+                        x: 12,
+                        y: -16
+                    },
+                    styles: {
+                        'color': config.selectedMarkColor
+                    }
+                }))
+            }
         }).html,
         className: 'selected-council-marker',
         iconSize: [24, 24],
@@ -472,7 +575,7 @@ function createSelectedIcon(opinionType) {
         popupAnchor: [0, -36]
     });
 
-    selectedIconCache.set(opinionType, divIcon);
+    selectedIconCache.set(category, divIcon);
     return divIcon;
 }
 
@@ -516,7 +619,7 @@ export function createSelectableCouncilTable(councils, columnConfig, layoutStyle
                 const marker = councilMarkerMap.get(uniqueHash);
 
                 if (marker) {
-                    marker.setIcon(createSelectedIcon(row["Opinion type"]));
+                    marker.setIcon(createSelectedIcon(getMarkerCategory(row)));
                     marker.setZIndexOffset(1000);
 
                     // Only open popup if exactly one item is selected

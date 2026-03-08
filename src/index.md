@@ -7,7 +7,7 @@ title: 2024/25 Council audit opinions
 // Cell 1: Import libraries and load data
 import { icon, layer } from 'npm:@fortawesome/fontawesome-svg-core';
 import { faCircle, faBuildingColumns } from 'npm:@fortawesome/free-solid-svg-icons';
-import { extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, mostSeriousFinding } from './components/utils.js';
+import { extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType } from './components/utils.js';
 // Lodash is already imported in utils.js
 
 // Load the data and pre-process coordinates
@@ -15,7 +15,8 @@ const rawCouncils = await FileAttachment("./data/CouncilsAuditData2025.csv").csv
 // Pre-process all councils to extract coordinates once
 const councils = rawCouncils.map(council => {
   extractCouncilCoordinates(council); // This now stores coordinates on the council object
-  council["Most serious finding"] = mostSeriousFinding(council);
+  council["Emphasis of matter paragraph"] = hasOpinionType(council, "Emphasis of matter paragraph");
+  council["Qualified opinion"] = hasOpinionType(council, "Qualified opinion");
   return council;
 });
 
@@ -40,7 +41,7 @@ ftc.parentNode.insertBefore(noteDiv,ftc);
 
 ```js
 // Cell 2: Define configuration options
-const columns = ["Council","Opinion type","Most serious finding"];
+const columns = ["Council","Opinion type","Qualified opinion","Emphasis of matter paragraph"];
 const layout = "fixed";
 ```
 

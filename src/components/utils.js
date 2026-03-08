@@ -160,10 +160,12 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
 
     // Count occurrences in filtered data
     if (fieldName === "Type 1") {
-        // For Type, count across all type columns
+        // For Type, count each council once per distinct type
         filteredData.forEach(item => {
+            const seen = new Set();
             TYPE_COLUMNS.forEach(col => {
-                if (item[col] && allPossibleValues.has(item[col])) {
+                if (item[col] && allPossibleValues.has(item[col]) && !seen.has(item[col])) {
+                    seen.add(item[col]);
                     fieldValueCounts.set(item[col], (fieldValueCounts.get(item[col]) || 0) + 1);
                 }
             });
@@ -592,6 +594,9 @@ function createSelectedIcon(category) {
 export function createSelectableCouncilTable(councils, columnConfig, layoutStyle, markerReferences, mapInstance) {
     const selection = Inputs.table(councils, {
         columns: columnConfig,
+        header: {
+            "Opinion type": "Audit report type"
+        },
         layout: layoutStyle,
         sort: "Council",
         rows: 27,

@@ -19,7 +19,7 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.73a8ec5a.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js">
-<link rel="modulepreload" href="./_import/components/utils.64068b15.js">
+<link rel="modulepreload" href="./_import/components/utils.44fea0db.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.46f60fd4.js">
 <link rel="modulepreload" href="./_npm/leaflet@1.9.4/721623d8.js">
@@ -32,10 +32,10 @@
 import {define} from "./_observablehq/client.7b29f095.js";
 import {registerFile} from "./_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.83378450.csv","lastModified":1772418283429,"size":82817});
+registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.2eed6544.csv","lastModified":1772953318801,"size":82583});
 
-define({id: "188b065b", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","mostSeriousFinding","rawCouncils","councils","ftc","noteDiv"], body: async (FileAttachment) => {
-const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, mostSeriousFinding}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.64068b15.js")]);
+define({id: "aaacb98d", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","hasOpinionType","rawCouncils","councils","ftc","noteDiv"], body: async (FileAttachment) => {
+const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.44fea0db.js")]);
 // Cell 1: Import libraries and load data
 // Lodash is already imported in utils.js
 
@@ -44,7 +44,8 @@ const rawCouncils = await FileAttachment("./data/CouncilsAuditData2025.csv").csv
 // Pre-process all councils to extract coordinates once
 const councils = rawCouncils.map(council => {
   extractCouncilCoordinates(council); // This now stores coordinates on the council object
-  council["Most serious finding"] = mostSeriousFinding(council);
+  council["Emphasis of matter paragraph"] = hasOpinionType(council, "Emphasis of matter paragraph");
+  council["Qualified opinion"] = hasOpinionType(council, "Qualified opinion");
   return council;
 });
 
@@ -65,12 +66,12 @@ noteDiv.innerHTML = [
   '</div>'
 ].join('\n');
 ftc.parentNode.insertBefore(noteDiv,ftc);
-return {icon,layer,faCircle,faBuildingColumns,extractCouncilCoordinates,createCouncilMapMarkers,createSelectableCouncilTable,createFilterableFieldTable,refreshFilteredDisplay,createDisplayRefresher,updateFilterAndRefresh,renderFilterTables,mostSeriousFinding,rawCouncils,councils,ftc,noteDiv};
+return {icon,layer,faCircle,faBuildingColumns,extractCouncilCoordinates,createCouncilMapMarkers,createSelectableCouncilTable,createFilterableFieldTable,refreshFilteredDisplay,createDisplayRefresher,updateFilterAndRefresh,renderFilterTables,hasOpinionType,rawCouncils,councils,ftc,noteDiv};
 }});
 
-define({id: "b68a593d", outputs: ["columns","layout"], body: () => {
+define({id: "c46284f3", outputs: ["columns","layout"], body: () => {
 // Cell 2: Define configuration options
-const columns = ["Council","Opinion type","Most serious finding"];
+const columns = ["Council","Opinion type","Qualified opinion","Emphasis of matter paragraph"];
 const layout = "fixed";
 return {columns,layout};
 }});
@@ -170,8 +171,8 @@ refreshView();
 <body>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:188b065b:--></div>
-<div class="observablehq observablehq--block"><!--:b68a593d:--></div>
+<div class="observablehq observablehq--block"><!--:aaacb98d:--></div>
+<div class="observablehq observablehq--block"><!--:c46284f3:--></div>
 <div class="observablehq observablehq--block"><!--:5ed40d69:--></div>
 <div class="observablehq observablehq--block"><!--:604cd6ee:--></div>
 <div class="observablehq observablehq--block"><!--:7ee57134:--></div>
@@ -192,9 +193,19 @@ refreshView();
   <div class="card grid-colspan-2" id="table_div">
   </div>
 </div>
+<script>
+  // Post iframe height to parent via postMessage.
+  // Uses ResizeObserver to catch async Observable Framework rendering.
+  function postHeight() {
+    var height = document.documentElement.scrollHeight;
+    window.parent.postMessage({type: 'iframeHeight', height: height}, '*');
+  }
+  window.addEventListener('resize', postHeight);
+  new ResizeObserver(postHeight).observe(document.body);
+</script>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-03-02T16:00:20">Mar 2, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-03-13T15:59:03">Mar 13, 2026</a>.</div>
 </footer>
 </div>
 </body>

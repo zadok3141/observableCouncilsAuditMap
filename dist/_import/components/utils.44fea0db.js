@@ -13,28 +13,14 @@ import {
 
 const TYPE_COLUMNS = ["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Type 8"];
 
-const FINDING_SEVERITY = [
-    "Qualified opinion",
-    "Key audit matter",
-    "Emphasis of matter paragraph",
-    "Other matter paragraph",
-];
-
 /**
- * Returns the most serious non-standard finding for a council, or "" if standard.
+ * Returns "Yes" if any Type 1–8 column matches the given type name, "No" otherwise.
  * @param {Object} item - The council data object
- * @returns {string} The most serious finding label, or ""
+ * @param {string} typeName - The type name to check for (e.g. "Qualified opinion")
+ * @returns {string} "Yes" or "No"
  */
-export function mostSeriousFinding(item) {
-    if (item["Opinion type"] === "Standard" || item["Opinion type"] === "Incomplete") return "";
-    const types = new Set();
-    TYPE_COLUMNS.forEach(col => {
-        if (item[col]) types.add(item[col]);
-    });
-    for (const level of FINDING_SEVERITY) {
-        if (types.has(level)) return level;
-    }
-    return "";
+export function hasOpinionType(item, typeName) {
+    return TYPE_COLUMNS.some(col => item[col] === typeName) ? "Yes" : "No";
 }
 
 const MARKER_CONFIG = {
@@ -160,10 +146,12 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
 
     // Count occurrences in filtered data
     if (fieldName === "Type 1") {
-        // For Type, count across all type columns
+        // For Type, count each council once per distinct type
         filteredData.forEach(item => {
+            const seen = new Set();
             TYPE_COLUMNS.forEach(col => {
-                if (item[col] && allPossibleValues.has(item[col])) {
+                if (item[col] && allPossibleValues.has(item[col]) && !seen.has(item[col])) {
+                    seen.add(item[col]);
                     fieldValueCounts.set(item[col], (fieldValueCounts.get(item[col]) || 0) + 1);
                 }
             });
@@ -197,12 +185,12 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
     // Create the table with initial selections
     const table = Inputs.table(tableRowData, {
         columns: [displayTitle, "Count"],
-        layout: "fixed",
+        layout: "auto",
         sort: "Count", // Sort by Count column
         reverse: true, // Sort in descending order
         rows: 7, // Show up to 7 rows
         multiple: true,
-        width: "100%",
+        width: "auto",
         required: false,
         value: initialValue
     });
@@ -592,6 +580,9 @@ function createSelectedIcon(category) {
 export function createSelectableCouncilTable(councils, columnConfig, layoutStyle, markerReferences, mapInstance) {
     const selection = Inputs.table(councils, {
         columns: columnConfig,
+        header: {
+            "Opinion type": "Audit report type"
+        },
         layout: layoutStyle,
         sort: "Council",
         rows: 27,

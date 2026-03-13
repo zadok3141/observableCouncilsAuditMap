@@ -185,12 +185,12 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
     // Create the table with initial selections
     const table = Inputs.table(tableRowData, {
         columns: [displayTitle, "Count"],
-        layout: "fixed",
+        layout: "auto",
         sort: "Count", // Sort by Count column
         reverse: true, // Sort in descending order
         rows: 7, // Show up to 7 rows
         multiple: true,
-        width: "100%",
+        width: "auto",
         required: false,
         value: initialValue
     });

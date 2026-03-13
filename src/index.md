@@ -148,3 +148,14 @@ refreshView();
   <div class="card grid-colspan-2" id="table_div">
   </div>
 </div>
+
+<script>
+  // Post iframe height to parent via postMessage.
+  // Uses ResizeObserver to catch async Observable Framework rendering.
+  function postHeight() {
+    var height = document.documentElement.scrollHeight;
+    window.parent.postMessage({type: 'iframeHeight', height: height}, '*');
+  }
+  window.addEventListener('resize', postHeight);
+  new ResizeObserver(postHeight).observe(document.body);
+</script>

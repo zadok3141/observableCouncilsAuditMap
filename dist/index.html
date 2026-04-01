@@ -19,7 +19,7 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.73a8ec5a.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js">
-<link rel="modulepreload" href="./_import/components/utils.726bd283.js">
+<link rel="modulepreload" href="./_import/components/utils.b4d369c7.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.46f60fd4.js">
 <link rel="modulepreload" href="./_npm/leaflet@1.9.4/721623d8.js">
@@ -32,10 +32,10 @@
 import {define} from "./_observablehq/client.7b29f095.js";
 import {registerFile} from "./_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.0f51ade3.csv","lastModified":1775011906870,"size":87481});
+registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.cd9ac5d7.csv","lastModified":1775015165137,"size":87240});
 
 define({id: "ccf8fe47", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","hasOpinionType","rawCouncils","councils","ftc","noteDiv"], body: async (FileAttachment) => {
-const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.726bd283.js")]);
+const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.b4d369c7.js")]);
 // Cell 1: Import libraries and load data
 // Lodash is already imported in utils.js
 
@@ -195,6 +195,9 @@ refreshView();
   <div class="card grid-colspan-2" id="table_div">
   </div>
 </div>
+<div id="nature_filter_container">
+  <!-- Grouped nature filter will be inserted here by JavaScript -->
+</div>
 <script>
   // Post iframe height to parent via postMessage.
   // Uses ResizeObserver to catch async Observable Framework rendering.
@@ -207,7 +210,7 @@ refreshView();
 </script>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-01T16:09:29">Apr 1, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-01T16:46:17">Apr 1, 2026</a>.</div>
 </footer>
 </div>
 </body>

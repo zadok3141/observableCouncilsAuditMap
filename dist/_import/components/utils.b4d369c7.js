@@ -545,14 +545,18 @@ export function renderFilterTables(filteredData, containerId, selectionHandler, 
         tablesContainer.appendChild(tableDiv);
     });
 
-    // Add grouped nature filter
-    const natureDiv = createGroupedNatureFilter(
-        filteredData,
-        allData,
-        filterState,
-        (fieldName, selectedValues) => selectionHandler(fieldName, selectedValues, filterState, refreshCallback)
-    );
-    tablesContainer.appendChild(natureDiv);
+    // Add grouped nature filter to its own container below the map
+    const natureContainer = document.getElementById('nature_filter_container');
+    if (natureContainer) {
+        natureContainer.textContent = '';
+        const natureDiv = createGroupedNatureFilter(
+            filteredData,
+            allData,
+            filterState,
+            (fieldName, selectedValues) => selectionHandler(fieldName, selectedValues, filterState, refreshCallback)
+        );
+        natureContainer.appendChild(natureDiv);
+    }
 }
 
 /**

@@ -232,3 +232,53 @@ div.observablehq--block {
     display: none;
     visibility: hidden;
 }
+
+/* Grouped nature filter */
+.nature-filter-grouped {
+    flex-basis: 100%;
+}
+
+.nature-group-heading {
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid var(--theme-foreground-faintest);
+    font-size: 0.85rem;
+}
+
+.nature-group-heading:first-child {
+    margin-top: 0;
+}
+
+.nature-group-count {
+    color: var(--theme-foreground-muted);
+    margin-left: 0.25rem;
+}
+
+.nature-filter-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.15rem 0;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.nature-filter-row:hover {
+    background: var(--theme-foreground-faintest);
+}
+
+.nature-filter-row input[type="checkbox"] {
+    flex-shrink: 0;
+}
+
+.nature-filter-label {
+    flex: 1;
+}
+
+.nature-filter-count {
+    color: var(--theme-foreground-muted);
+    flex-shrink: 0;
+    text-align: right;
+    min-width: 1.5rem;
+}

@@ -7,11 +7,11 @@
 <title>2024/25 Council audit opinions | Council Audit matters raised</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
-<link rel="preload" as="style" href="./_import/custom.5d302557.css">
+<link rel="preload" as="style" href="./_import/custom.c778fba0.css">
 <link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="preload" as="style" href="./_npm/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
-<link rel="stylesheet" type="text/css" href="./_import/custom.5d302557.css">
+<link rel="stylesheet" type="text/css" href="./_import/custom.c778fba0.css">
 <link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="stylesheet" type="text/css" href="./_npm/leaflet@1.9.4/dist/leaflet.css">
 <link rel="modulepreload" href="./_observablehq/client.7b29f095.js">
@@ -19,7 +19,7 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.73a8ec5a.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js">
-<link rel="modulepreload" href="./_import/components/utils.44fea0db.js">
+<link rel="modulepreload" href="./_import/components/utils.726bd283.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.46f60fd4.js">
 <link rel="modulepreload" href="./_npm/leaflet@1.9.4/721623d8.js">
@@ -32,10 +32,10 @@
 import {define} from "./_observablehq/client.7b29f095.js";
 import {registerFile} from "./_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.2eed6544.csv","lastModified":1772953318801,"size":82583});
+registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.0f51ade3.csv","lastModified":1775011906870,"size":87481});
 
-define({id: "aaacb98d", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","hasOpinionType","rawCouncils","councils","ftc","noteDiv"], body: async (FileAttachment) => {
-const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.44fea0db.js")]);
+define({id: "ccf8fe47", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","hasOpinionType","rawCouncils","councils","ftc","noteDiv"], body: async (FileAttachment) => {
+const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.726bd283.js")]);
 // Cell 1: Import libraries and load data
 // Lodash is already imported in utils.js
 
@@ -59,7 +59,7 @@ noteDiv.innerHTML = [
   '<div id="note1_div" class="note">',
   '  <label for="note1_toggle" aria-label="How to use this map (press Space to toggle)">How to use this map</label>',
   '  <ul id="note1_content" aria-labelledby="note1_toggle">',
-  '    <li>Click one or more checkboxes to select Opinion type, and/or Type of non-standard paragraph to filter the list of councils.</li>',
+  '    <li>Click one or more checkboxes to select Opinion type, Type of non-standard paragraph, and/or Nature of finding to filter the list of councils.</li>',
   '    <li>Select one or more councils from the sortable lists on the right of (on a mobile: under) the map. Click on a council\u2019s marker on the map to see what audit findings were raised and why.</li>',
   '    <li>Click on any table heading to sort the data.</li>',
   '  </ul>',
@@ -92,12 +92,13 @@ const councilMarkerReferences = [];
 return {councils_map,osm,councilMarkerLayer,councilMarkerReferences};
 }});
 
-define({id: "604cd6ee", outputs: ["filterState"], body: () => {
+define({id: "05e66ec1", outputs: ["filterState"], body: () => {
 // Cell 4: Define filter state (reactive)
 const filterState = {
     "Financial year": [],
     "Type 1": [],
-    "Opinion type": []
+    "Opinion type": [],
+    "Nature 1": []
 };
 return {filterState};
 }});
@@ -112,7 +113,7 @@ const displayOptions = {
 return {displayOptions};
 }});
 
-define({id: "7948792d", inputs: ["createDisplayRefresher","councils","filterState","councilMarkerLayer","councilMarkerReferences","councils_map","displayOptions","Inputs","html"], outputs: ["refreshView","resetButton","resetButtonContainer","fieldTablesContainer"], body: (createDisplayRefresher,councils,filterState,councilMarkerLayer,councilMarkerReferences,councils_map,displayOptions,Inputs,html) => {
+define({id: "d6ce1a0b", inputs: ["createDisplayRefresher","councils","filterState","councilMarkerLayer","councilMarkerReferences","councils_map","displayOptions","Inputs","html"], outputs: ["refreshView","resetButton","resetButtonContainer","fieldTablesContainer"], body: (createDisplayRefresher,councils,filterState,councilMarkerLayer,councilMarkerReferences,councils_map,displayOptions,Inputs,html) => {
 // Cell 6: Create refresh function and reset button
 const refreshView = createDisplayRefresher(
     councils,
@@ -132,6 +133,7 @@ const resetButton = Inputs.button("Reset filters", {
         filterState["Financial year"] = [];
         filterState["Type 1"] = [];
         filterState["Opinion type"] = [];
+        filterState["Nature 1"] = [];
 
         // Reset map to default view
         councils_map.setView([-40.9, 175.232], 5);
@@ -171,12 +173,12 @@ refreshView();
 <body>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:aaacb98d:--></div>
+<div class="observablehq observablehq--block"><!--:ccf8fe47:--></div>
 <div class="observablehq observablehq--block"><!--:c46284f3:--></div>
 <div class="observablehq observablehq--block"><!--:5ed40d69:--></div>
-<div class="observablehq observablehq--block"><!--:604cd6ee:--></div>
+<div class="observablehq observablehq--block"><!--:05e66ec1:--></div>
 <div class="observablehq observablehq--block"><!--:7ee57134:--></div>
-<div class="observablehq observablehq--block"><!--:7948792d:--></div>
+<div class="observablehq observablehq--block"><!--:d6ce1a0b:--></div>
 <div class="observablehq observablehq--block"><!--:af35670b:--></div>
 <style>
 /* Add styling for councils with missing coordinates */
@@ -205,7 +207,7 @@ refreshView();
 </script>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-03-13T15:59:03">Mar 13, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-01T16:09:29">Apr 1, 2026</a>.</div>
 </footer>
 </div>
 </body>

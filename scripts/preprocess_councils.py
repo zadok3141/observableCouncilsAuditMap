@@ -6,16 +6,19 @@ Fixes:
 1. Duplicate "Description 6" header → rename second to "Description 7"
 2. Missing "Description 8" column → add it
 3. Simplify type headers: strip parenthetical annotations → "Type 1" .. "Type 8"
-4. Fix Buller District Council's empty "Opinion type" → "Incomplete"
-5. Drop the Address column (not needed at runtime)
-6. Add Latitude/Longitude from council-coordinates.json
-7. Fix Hawke's Bay Regional Council's offset data (Other Matter Paragraph
+4. Rename Nature headers to short form: "Nature 1" .. "Nature 6"
+5. Rename "Type of audit report" → "Opinion type"
+6. Fix Buller District Council's empty "Opinion type" → "Incomplete"
+7. Drop the Address column (not needed at runtime)
+8. Add Latitude/Longitude from council-coordinates.json
+9. Fix Hawke's Bay Regional Council's offset data (Other Matter Paragraph
    data shifted due to the missing Description 8 column in source)
+10. Clean nature values: normalise spacing, case, and labels
 
 Usage:
     python scripts/preprocess_councils.py
 
-Input:  Final LG Audit Opinion Dashboard Content.csv
+Input:  Council-audit-data-April.csv
 Output: src/data/CouncilsAuditData2025.csv
 """
 
@@ -25,22 +28,46 @@ import os
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-INPUT_CSV = os.path.join(PROJECT_ROOT,
-                         "Final LG Audit Opinion Dashboard Content.csv")
+INPUT_CSV = os.path.join(PROJECT_ROOT, "Council-audit-data-April.csv")
 COORDS_JSON = os.path.join(PROJECT_ROOT, "src", "data",
                            "council-coordinates.json")
 OUTPUT_CSV = os.path.join(PROJECT_ROOT, "src", "data",
                           "CouncilsAuditData2025.csv")
 
+# Nature column renaming: raw header → clean header
+NATURE_HEADER_MAP = {
+    "Nature of qualified opinion 1": "Nature 1",
+    "Nature of qualified opinion 2": "Nature 2",
+    "Nature of qualified opinion 3": "Nature 3",
+    "Nature of EoM 4": "Nature 4",
+    "Nature of EoM 5": "Nature 5",
+    "Nature of EoM 6": "Nature 6",
+}
+
+# Nature value cleanups applied to Nature 1-6
+NATURE_CLEANUPS = {
+    # Spacing fix
+    "Service performance: Water services  - counting the number of complaints":
+        "Service performance: Water services - counting the number of complaints",
+    # Singular -> plural
+    "Financial statement": "Financial statements",
+    # Sentence case
+    "Service performance: Flood Protection":
+        "Service performance: Flood protection",
+    # Three waters normalisation
+    "Three waters assets":
+        "Uncertainty over the fair value of three waters assets",
+}
+
+# Additional cleanup applied to EoM Nature columns (4-6) only
+EOM_NATURE_CLEANUPS = {
+    "Greenhouse gas emissions":
+        "Inherent uncertainties in the measurement of greenhouse gas emissions",
+}
+
 
 def fix_headers(raw_headers):
     """Fix the raw CSV headers: deduplicate, rename, simplify."""
-    # The raw headers have:
-    #   ... "Description 6", "Type 7 (Key audit matter)", "Description 6",
-    #       "Type 8 (Other Matter Paragraph)"
-    # We need:
-    #   ... "Description 6", "Type 7", "Description 7", "Type 8", "Description 8"
-
     fixed = []
     desc6_count = 0
     for h in raw_headers:
@@ -50,6 +77,14 @@ def fix_headers(raw_headers):
             if desc6_count == 2:
                 fixed.append("Description 7")
                 continue
+        # Rename "Type of audit report" → "Opinion type"
+        if h == "Type of audit report":
+            fixed.append("Opinion type")
+            continue
+        # Rename Nature headers to short form
+        if h in NATURE_HEADER_MAP:
+            fixed.append(NATURE_HEADER_MAP[h])
+            continue
         # Simplify Type headers: "Type 1 (qualified opinion)" → "Type 1"
         if h.startswith("Type ") and "(" in h:
             h = h.split("(")[0].strip()
@@ -104,6 +139,23 @@ def relabel_types(row):
     return row
 
 
+def clean_nature_values(row):
+    """Normalise nature column values: spacing, case, labels."""
+    for i in range(1, 7):
+        key = f"Nature {i}"
+        val = row.get(key, "").strip()
+        if not val:
+            continue
+        # Apply general cleanups
+        if val in NATURE_CLEANUPS:
+            val = NATURE_CLEANUPS[val]
+        # Apply EoM-specific cleanups (Nature 4-6 only)
+        if i >= 4 and val in EOM_NATURE_CLEANUPS:
+            val = EOM_NATURE_CLEANUPS[val]
+        row[key] = val
+    return row
+
+
 def main():
     # Load coordinates
     with open(COORDS_JSON, "r", encoding="utf-8") as f:
@@ -146,6 +198,10 @@ def main():
     # Relabel type values
     for row in rows:
         relabel_types(row)
+
+    # Clean nature values
+    for row in rows:
+        clean_nature_values(row)
 
     # Build output
     output_headers = [h for h in fixed_headers if h != "Address"]

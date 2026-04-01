@@ -12,6 +12,7 @@ import {
 } from "../../_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js";
 
 const TYPE_COLUMNS = ["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Type 8"];
+const NATURE_COLUMNS = ["Nature 1", "Nature 2", "Nature 3", "Nature 4", "Nature 5", "Nature 6"];
 
 /**
  * Returns "Yes" if any Type 1–8 column matches the given type name, "No" otherwise.
@@ -127,6 +128,15 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
                 if (item[col]) allPossibleValues.add(item[col]);
             });
         });
+    } else if (fieldName === "Nature 1") {
+        // Aggregate across all Nature columns + Type 7/8 labels
+        dataForValues.forEach(item => {
+            NATURE_COLUMNS.forEach(col => {
+                if (item[col]) allPossibleValues.add(item[col]);
+            });
+            if (item["Type 7"]) allPossibleValues.add(item["Type 7"]);
+            if (item["Type 8"]) allPossibleValues.add(item["Type 8"]);
+        });
     } else {
         // For other fields, just check the specific field
         dataForValues.forEach(item => {
@@ -153,6 +163,24 @@ export function createFilterableFieldTable(filteredData, allData = null, fieldNa
                 if (item[col] && allPossibleValues.has(item[col]) && !seen.has(item[col])) {
                     seen.add(item[col]);
                     fieldValueCounts.set(item[col], (fieldValueCounts.get(item[col]) || 0) + 1);
+                }
+            });
+        });
+    } else if (fieldName === "Nature 1") {
+        // For Nature, count each council once per distinct nature value
+        filteredData.forEach(item => {
+            const seen = new Set();
+            NATURE_COLUMNS.forEach(col => {
+                if (item[col] && allPossibleValues.has(item[col]) && !seen.has(item[col])) {
+                    seen.add(item[col]);
+                    fieldValueCounts.set(item[col], (fieldValueCounts.get(item[col]) || 0) + 1);
+                }
+            });
+            // Count Type 7/8 labels as nature values
+            [item["Type 7"], item["Type 8"]].forEach(val => {
+                if (val && allPossibleValues.has(val) && !seen.has(val)) {
+                    seen.add(val);
+                    fieldValueCounts.set(val, (fieldValueCounts.get(val) || 0) + 1);
                 }
             });
         });
@@ -330,6 +358,139 @@ export function updateFilterAndRefresh(fieldName, selectedValues, filterState, r
     refreshCallback();
 }
 
+// Nature value groups: which Nature columns belong to each finding type
+const NATURE_GROUPS = [
+    {
+        label: "Number of councils with qualified audit opinions",
+        columns: ["Nature 1", "Nature 2", "Nature 3"],
+        typeColumns: [],
+    },
+    {
+        label: "Number of councils with emphasis of matter",
+        columns: ["Nature 4", "Nature 5", "Nature 6"],
+        typeColumns: [],
+    },
+    {
+        label: "Number of councils with other matter paragraph",
+        columns: [],
+        typeColumns: ["Type 8"],
+    },
+    {
+        label: "Number of councils with key audit matters",
+        columns: [],
+        typeColumns: ["Type 7"],
+    },
+];
+
+/**
+ * Creates a grouped nature filter with section headings and checkboxes.
+ * Nature values are grouped by finding type (qualified, EoM, other matter, key audit).
+ * All content is from our preprocessed CSV data, not user input.
+ * @param {Array} filteredData - Currently filtered data (for counts)
+ * @param {Array} allData - Complete dataset (for all possible values)
+ * @param {Object} filterState - Current filter state
+ * @param {Function} onSelectionChange - Callback when selection changes
+ * @returns {HTMLElement} The grouped filter element
+ */
+function createGroupedNatureFilter(filteredData, allData, filterState, onSelectionChange) {
+    const container = document.createElement('div');
+    container.className = 'field-table nature-filter-grouped';
+    container.id = 'filter-nature-of-finding';
+
+    const currentSelections = new Set(filterState["Nature 1"] || []);
+
+    NATURE_GROUPS.forEach(group => {
+        // Gather all possible values for this group from the complete dataset
+        const allValues = new Map(); // value -> 0 (init counts)
+        allData.forEach(item => {
+            group.columns.forEach(col => {
+                const v = item[col];
+                if (v) allValues.set(v, 0);
+            });
+            group.typeColumns.forEach(col => {
+                const v = item[col];
+                if (v) allValues.set(v, 0);
+            });
+        });
+
+        if (allValues.size === 0) return;
+
+        // Count occurrences in filtered data (each council counted once per distinct value)
+        filteredData.forEach(item => {
+            const seen = new Set();
+            group.columns.forEach(col => {
+                const v = item[col];
+                if (v && allValues.has(v) && !seen.has(v)) {
+                    seen.add(v);
+                    allValues.set(v, allValues.get(v) + 1);
+                }
+            });
+            group.typeColumns.forEach(col => {
+                const v = item[col];
+                if (v && allValues.has(v) && !seen.has(v)) {
+                    seen.add(v);
+                    allValues.set(v, allValues.get(v) + 1);
+                }
+            });
+        });
+
+        // Count councils in this group (councils with at least one value in this group)
+        const groupCouncilCount = filteredData.filter(item => {
+            return group.columns.some(col => item[col]) ||
+                   group.typeColumns.some(col => item[col]);
+        }).length;
+
+        // Section heading (content from our own static labels, not user input)
+        const heading = document.createElement('div');
+        heading.className = 'nature-group-heading';
+        const headingLabel = document.createElement('strong');
+        headingLabel.textContent = group.label;
+        const headingCount = document.createElement('span');
+        headingCount.className = 'nature-group-count';
+        headingCount.textContent = groupCouncilCount;
+        heading.appendChild(headingLabel);
+        heading.appendChild(document.createTextNode(' '));
+        heading.appendChild(headingCount);
+        container.appendChild(heading);
+
+        // Sort values by count descending
+        const sortedValues = Array.from(allValues.entries()).sort((a, b) => b[1] - a[1]);
+
+        // Create checkbox rows
+        sortedValues.forEach(([value, count]) => {
+            const row = document.createElement('label');
+            row.className = 'nature-filter-row';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = currentSelections.has(value);
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    currentSelections.add(value);
+                } else {
+                    currentSelections.delete(value);
+                }
+                onSelectionChange("Nature 1", Array.from(currentSelections));
+            });
+
+            const label = document.createElement('span');
+            label.className = 'nature-filter-label';
+            label.textContent = value;
+
+            const countSpan = document.createElement('span');
+            countSpan.className = 'nature-filter-count';
+            countSpan.textContent = count;
+
+            row.appendChild(checkbox);
+            row.appendChild(label);
+            row.appendChild(countSpan);
+            container.appendChild(row);
+        });
+    });
+
+    return container;
+}
+
 /**
  * Creates and renders filter tables for data filtering
  * @param {Array} filteredData - The currently filtered data
@@ -383,6 +544,15 @@ export function renderFilterTables(filteredData, containerId, selectionHandler, 
         tableDiv.appendChild(table);
         tablesContainer.appendChild(tableDiv);
     });
+
+    // Add grouped nature filter
+    const natureDiv = createGroupedNatureFilter(
+        filteredData,
+        allData,
+        filterState,
+        (fieldName, selectedValues) => selectionHandler(fieldName, selectedValues, filterState, refreshCallback)
+    );
+    tablesContainer.appendChild(natureDiv);
 }
 
 /**
@@ -435,7 +605,15 @@ export function refreshFilteredDisplay(councilData, filterState, markerLayer, ma
         const reportTypeFilter = filterState["Opinion type"].length === 0 ||
             filterState["Opinion type"].includes(item["Opinion type"]);
 
-        return yearFilter && typeFilter && reportTypeFilter;
+        // Nature filter — OR logic (council passes if it has ANY selected nature)
+        const natureFilter = filterState["Nature 1"].length === 0 ||
+            filterState["Nature 1"].some(nature => {
+                if (NATURE_COLUMNS.some(col => item[col] === nature)) return true;
+                if (item["Type 7"] === nature || item["Type 8"] === nature) return true;
+                return false;
+            });
+
+        return yearFilter && typeFilter && reportTypeFilter && natureFilter;
     });
 
     // Update the map

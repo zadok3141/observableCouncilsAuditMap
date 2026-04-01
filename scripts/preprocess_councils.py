@@ -23,13 +23,14 @@ Output: src/data/CouncilsAuditData2025.csv
 """
 
 import csv
+import json
 import os
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 INPUT_CSV = os.path.join(PROJECT_ROOT, "Council-audit-data-April.csv")
-COORDS_CSV = os.path.join(PROJECT_ROOT, "src", "data",
-                          "CouncilsAuditData2025.csv")
+COORDS_JSON = os.path.join(PROJECT_ROOT, "src", "data",
+                           "council-coordinates.json")
 OUTPUT_CSV = os.path.join(PROJECT_ROOT, "src", "data",
                           "CouncilsAuditData2025.csv")
 
@@ -156,16 +157,9 @@ def clean_nature_values(row):
 
 
 def main():
-    # Load coordinates from the existing output CSV (manually corrected)
-    coordinates = {}
-    if os.path.exists(COORDS_CSV):
-        with open(COORDS_CSV, "r", encoding="utf-8") as f:
-            for row in csv.DictReader(f):
-                name = row.get("Council", "").strip()
-                lat = row.get("Latitude", "").strip()
-                lng = row.get("Longitude", "").strip()
-                if name and lat and lng:
-                    coordinates[name] = {"lat": lat, "lng": lng}
+    # Load coordinates from council-coordinates.json (reviewed via geocode-review.html)
+    with open(COORDS_JSON, "r", encoding="utf-8") as f:
+        coordinates = json.load(f)
 
     # Read raw CSV — use raw field reading to handle header issues
     with open(INPUT_CSV, "r", encoding="utf-8-sig") as f:

@@ -186,6 +186,14 @@ refreshView();
   color: #ff0000;
   font-style: italic;
 }
+/* Break the iframe height feedback loop: Observable Framework sets
+   min-height: calc(100vh - 20rem) on #observablehq-main, but inside an
+   iframe 100vh = iframe viewport height.  When the parent resizes the
+   iframe based on scrollHeight, 100vh grows, min-height grows,
+   scrollHeight grows → runaway loop.  Override to 0 for embedded use. */
+#observablehq-main {
+    min-height: 0 !important;
+}
 </style>
 <div class="field-tables-container" id="field_tables_container">
   <!-- Field tables will be inserted here by JavaScript -->
@@ -200,17 +208,23 @@ refreshView();
 </div>
 <script>
   // Post iframe height to parent via postMessage.
-  // Uses ResizeObserver to catch async Observable Framework rendering.
+  // Debounced to avoid capturing transient DOM states while Observable
+  // cells render (tables briefly appear at full height before max-height
+  // constrains them).  ResizeObserver catches async rendering changes.
+  var _postHeightTimer;
   function postHeight() {
-    var height = document.documentElement.scrollHeight;
-    window.parent.postMessage({type: 'iframeHeight', height: height}, '*');
+    clearTimeout(_postHeightTimer);
+    _postHeightTimer = setTimeout(function() {
+      var height = document.body.scrollHeight;
+      window.parent.postMessage({type: 'iframeHeight', height: height}, '*');
+    }, 150);
   }
   window.addEventListener('resize', postHeight);
   new ResizeObserver(postHeight).observe(document.body);
 </script>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-01T17:36:13">Apr 1, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-13T14:10:34">Apr 13, 2026</a>.</div>
 </footer>
 </div>
 </body>

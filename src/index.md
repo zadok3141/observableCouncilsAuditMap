@@ -139,6 +139,14 @@ refreshView();
   color: #ff0000;
   font-style: italic;
 }
+/* Break the iframe height feedback loop: Observable Framework sets
+   min-height: calc(100vh - 20rem) on #observablehq-main, but inside an
+   iframe 100vh = iframe viewport height.  When the parent resizes the
+   iframe based on scrollHeight, 100vh grows, min-height grows,
+   scrollHeight grows → runaway loop.  Override to 0 for embedded use. */
+#observablehq-main {
+    min-height: 0 !important;
+}
 </style>
 
 <div class="field-tables-container" id="field_tables_container">
@@ -157,10 +165,16 @@ refreshView();
 
 <script>
   // Post iframe height to parent via postMessage.
-  // Uses ResizeObserver to catch async Observable Framework rendering.
+  // Debounced to avoid capturing transient DOM states while Observable
+  // cells render (tables briefly appear at full height before max-height
+  // constrains them).  ResizeObserver catches async rendering changes.
+  var _postHeightTimer;
   function postHeight() {
-    var height = document.documentElement.scrollHeight;
-    window.parent.postMessage({type: 'iframeHeight', height: height}, '*');
+    clearTimeout(_postHeightTimer);
+    _postHeightTimer = setTimeout(function() {
+      var height = document.body.scrollHeight;
+      window.parent.postMessage({type: 'iframeHeight', height: height}, '*');
+    }, 150);
   }
   window.addEventListener('resize', postHeight);
   new ResizeObserver(postHeight).observe(document.body);

@@ -24,19 +24,6 @@ const councils = rawCouncils.map(council => {
 // Note: This static help text is hardcoded, not user-supplied content
 const ftc = document.getElementById('field_tables_container');
 
-const noteDiv = document.createElement('div');
-noteDiv.innerHTML = [
-  '<input type="checkbox" id="note1_toggle" aria-expanded="false" aria-controls="note1_content">',
-  '<div id="note1_div" class="note">',
-  '  <label for="note1_toggle" aria-label="How to use this map (press Space to toggle)">How to use this map</label>',
-  '  <ul id="note1_content" aria-labelledby="note1_toggle">',
-  '    <li>Click one or more checkboxes to select Opinion type, Type of non-standard paragraph, and/or Nature of finding to filter the list of councils.</li>',
-  '    <li>Select one or more councils from the sortable lists on the right of (on a mobile: under) the map. Click on a council\u2019s marker on the map to see what audit findings were raised and why.</li>',
-  '    <li>Click on any table heading to sort the data.</li>',
-  '  </ul>',
-  '</div>'
-].join('\n');
-ftc.parentNode.insertBefore(noteDiv,ftc);
 ```
 
 ```js

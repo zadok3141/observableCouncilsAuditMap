@@ -1,0 +1,79 @@
+# Field-level patch: naturaljustice.csv → src/data/CouncilsAuditData2025.csv
+# Format per block:
+#   COUNCIL: <Council name>
+#   FIELD:   <column name>
+#   -  <old value>
+#   +  <new value>
+#
+# To apply all of these, overwrite the target with the regenerated CSV:
+#   cp CouncilsAuditData2025.naturaljustice.csv src/data/CouncilsAuditData2025.csv
+
+COUNCIL: Greater Wellington Regional Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'
+
+COUNCIL: Hawke's Bay Regional Council
+FIELD:   Description 7
+-  ''
++  'Other Matter Paragraph'
+
+COUNCIL: Hutt City Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'
+
+COUNCIL: Nelson City Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'
+
+COUNCIL: Palmerston North City Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'
+
+COUNCIL: Tauranga City Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'
+
+COUNCIL: Upper Hutt City Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'
+
+COUNCIL: Waikato Regional Council
+FIELD:   Description 4
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions The Council has chosen to include a measure of its greenhouse gas (GHG) emissions in its performance information. Without modifying our opinion and considering the public interest inclimate change related information, we draw attention to Measure 19 on page 25 of the annual report, which outlines the inherent uncertainty in the reported GHG emissions. Quantifying GHG emissions is subject to inherent uncertainty because the scientific knowledge and methodologies to determine the emissions factors and processes to calculate or estimate quantities of GHG sources are still evolving, as are GHG reporting and assurance standards.'
++  'Inherent uncertainties in the measurement of greenhouse gas emissions The Council has chosen to include a measure of its greenhouse gas (GHG) emissions in its performance information. Without modifying our opinion and considering the public interest in climate change related information, we draw attention to Section 2 on page 11 of the annual report, which outlines the inherent uncertainty in the reported GHG emissions. Quantifying GHG emissions is subject to inherent uncertainty because the scientific knowledge and methodologies to determine the emissions factors and processes to calculate or estimate quantities of GHG sources are still evolving, as are GHG reporting and assurance standards.'
+
+COUNCIL: Wellington City Council
+FIELD:   Description 1
+-  'Statement of service provision: Measurement and reporting of Wellington City Council Group greenhouse gas emissions. The Council has chosen to include a measure of the quantity of greenhouse gas (GHG) emissions from the Council and Group in its performance information. This includes emissions generated directly by the Group itself, as well as indirect emissions related to the products and services used by the Council and Group. We consider this material performance information because the Council has declared a climate emergency and because of the public interest in climate change related information.In measuring its scope 3 GHG emissions, the Council has applied spend-based emissions factors to estimate the GHG emissions associated with certain goods and services, including capital goods, purchased by the Council in the 2025 and 2024 performance years.Our audit testing identified several issues in the application of these spend-based factors, and the Council has determined that further work is required to strengthen the methodologies and assumptions around how supplier spend is categorised and the emissions factors are applied, as explained on page 54 of Volume 1 of the annual report.As a result, our work over the accuracy and completeness of Group’s scope 3 emissions was limited and there were no practicable audit procedures we could apply to obtain assurance over the reported results for 2025 and 2024 for the performance measure described above. Without further modifying our opinion, we also draw attention to the inherent uncertainty disclosure in Volume 1, page 198 of the annual report, which outlines the inherent uncertainty in the reported GHG emissions. Quantifying GHG emissions is subject to inherent uncertainty because the scientific knowledge and methodologies to determine the emissions factors and processes to calculate or estimate quantities of GHG sources are still evolving, as are GHG reporting and assurance standards'
++  'Statement of service provision: Measurement and reporting of Wellington City Council Group greenhouse gas emissions. The Council has chosen to include a measure of the quantity of greenhouse gas (GHG) emissions from the Council and Group in its performance information. This includes emissions generated directly by the Group itself, as well as indirect emissions related to the products and services used by the Council and Group. We consider this material performance information because the Council has declared a climate emergency and because of the public interest in climate change related information.In measuring its scope 3 GHG emissions, the Council has applied spend-based emissions factors to estimate the GHG emissions associated with certain goods and services, including capital goods, purchased by the Council in the 2025 and 2024 performance years.Our audit testing identified several issues in the application of these spend-based factors, and the Council has determined that further work is required to strengthen the methodologies and assumptions around how supplier spend is categorised and the emissions factors are applied, as explained on page 52 of Volume 1 of the annual report.As a result, our work over the accuracy and completeness of Group’s scope 3 emissions was limited and there were no practicable audit procedures we could apply to obtain assurance over the reported results for 2025 and 2024 for the performance measure described above. Without further modifying our opinion, we also draw attention to the inherent uncertainty disclosure in Volume 1, page 180 of the annual report, which outlines the inherent uncertainty in reporting GHG emissions. Quantifying GHG emissions is subject to inherent uncertainty because the scientific knowledge and methodologies to determine the emissions factors and processes to calculate or estimate quantities of GHG sources are still evolving, as are GHG reporting and assurance standards.'
+
+COUNCIL: Wellington City Council
+FIELD:   Description 4
+-  'Future of water delivery. Note 40 on pages 121 to 122 of Volume 2 outlines that in response to the Government’s Local Water Done Well reforms, the Council has decided to establish a multi-owned water organisation with Hutt City, Porirua City, Upper Hutt City and Greater Wellington Regional Councils to deliver water, wastewater and stormwater services from 1 July 2026. The financial impact of this decision is unknown because details of the exact arrangements are still being considered.'
++  'Future of water delivery. Note 40 on pages 153 to 154 of Volume 2 outlines that in response to the Government’s Local Water Done Well reforms, the Council has decided to establish a multi-owned water organisation with Hutt City, Porirua City, Upper Hutt City and Greater Wellington Regional Councils to deliver water, wastewater and stormwater services from 1 July 2026. The financial impact of this decision is unknown because details of the exact arrangements are still being considered.'
+
+COUNCIL: Wellington City Council
+FIELD:   Nature 5
+-  'Uncertainty over the fair value of three waters assets'
++  'Three waters assets'
+
+COUNCIL: Wellington City Council
+FIELD:   Description 5
+-  'Uncertainty over the fair value of three waters asset. Without modifying our opinion, we draw attention Page 62 to 63 of the financial statements in Volume 2 outlines the significant uncertainties over the fair value of three waters assets as at 30 June 2024 and 30 June 2025. The fair value of these assets has been affected by increased costs of construction over the last few years. The review of procurement arrangements and changes to the region’s water services delivery model could lead to changes in construction costs, which increases the uncertainty over the estimated fair value of these assets'
++  'Uncertainty over the fair value of three waters asset. Without modifying our opinion, we draw attention Page 72 to 73 of the financial statements in Volume 2 outlines the significant uncertainties over the fair value of three waters assets as at 30 June 2024 and 30 June 2025. The fair value of these assets has been affected by increased costs of construction over the last few years. The review of procurement arrangements and changes to the region’s water services delivery model could lead to changes in construction costs, which increases the uncertainty over the estimated fair value of these assets'
+
+COUNCIL: West Coast Regional Council
+FIELD:   Nature 2
+-  'Financial statements'
++  'Financial statement'
+
+COUNCIL: Whakatane District Council
+FIELD:   Nature 5
+-  'Inherent uncertainties in the measurement of greenhouse gas emissions'
++  'Greenhouse gas emissions'

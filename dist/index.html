@@ -19,7 +19,7 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.73a8ec5a.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js">
 <link rel="modulepreload" href="./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js">
-<link rel="modulepreload" href="./_import/components/utils.b4d369c7.js">
+<link rel="modulepreload" href="./_import/components/utils.6e67c102.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.46f60fd4.js">
 <link rel="modulepreload" href="./_npm/leaflet@1.9.4/721623d8.js">
@@ -32,10 +32,10 @@
 import {define} from "./_observablehq/client.7b29f095.js";
 import {registerFile} from "./_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.9a7077a3.csv","lastModified":1775018030532,"size":87326});
+registerFile("./data/CouncilsAuditData2025.csv", {"name":"./data/CouncilsAuditData2025.csv","mimeType":"text/csv","path":"./_file/data/CouncilsAuditData2025.8fb7a8cf.csv","lastModified":1776655824551,"size":87014});
 
-define({id: "ccf8fe47", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","hasOpinionType","rawCouncils","councils","ftc","noteDiv"], body: async (FileAttachment) => {
-const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.b4d369c7.js")]);
+define({id: "79331f42", inputs: ["FileAttachment"], outputs: ["icon","layer","faCircle","faBuildingColumns","extractCouncilCoordinates","createCouncilMapMarkers","createSelectableCouncilTable","createFilterableFieldTable","refreshFilteredDisplay","createDisplayRefresher","updateFilterAndRefresh","renderFilterTables","hasOpinionType","rawCouncils","councils","ftc"], body: async (FileAttachment) => {
+const [{icon, layer}, {faCircle, faBuildingColumns}, {extractCouncilCoordinates, createCouncilMapMarkers, createSelectableCouncilTable, createFilterableFieldTable, refreshFilteredDisplay, createDisplayRefresher, updateFilterAndRefresh, renderFilterTables, hasOpinionType}] = await Promise.all([import("./_npm/@fortawesome/fontawesome-svg-core@7.2.0/4d97ac5b.js"), import("./_npm/@fortawesome/free-solid-svg-icons@7.2.0/7f2a1866.js"), import("./_import/components/utils.6e67c102.js")]);
 // Cell 1: Import libraries and load data
 // Lodash is already imported in utils.js
 
@@ -53,20 +53,7 @@ const councils = rawCouncils.map(council => {
 // Note: This static help text is hardcoded, not user-supplied content
 const ftc = document.getElementById('field_tables_container');
 
-const noteDiv = document.createElement('div');
-noteDiv.innerHTML = [
-  '<input type="checkbox" id="note1_toggle" aria-expanded="false" aria-controls="note1_content">',
-  '<div id="note1_div" class="note">',
-  '  <label for="note1_toggle" aria-label="How to use this map (press Space to toggle)">How to use this map</label>',
-  '  <ul id="note1_content" aria-labelledby="note1_toggle">',
-  '    <li>Click one or more checkboxes to select Opinion type, Type of non-standard paragraph, and/or Nature of finding to filter the list of councils.</li>',
-  '    <li>Select one or more councils from the sortable lists on the right of (on a mobile: under) the map. Click on a council\u2019s marker on the map to see what audit findings were raised and why.</li>',
-  '    <li>Click on any table heading to sort the data.</li>',
-  '  </ul>',
-  '</div>'
-].join('\n');
-ftc.parentNode.insertBefore(noteDiv,ftc);
-return {icon,layer,faCircle,faBuildingColumns,extractCouncilCoordinates,createCouncilMapMarkers,createSelectableCouncilTable,createFilterableFieldTable,refreshFilteredDisplay,createDisplayRefresher,updateFilterAndRefresh,renderFilterTables,hasOpinionType,rawCouncils,councils,ftc,noteDiv};
+return {icon,layer,faCircle,faBuildingColumns,extractCouncilCoordinates,createCouncilMapMarkers,createSelectableCouncilTable,createFilterableFieldTable,refreshFilteredDisplay,createDisplayRefresher,updateFilterAndRefresh,renderFilterTables,hasOpinionType,rawCouncils,councils,ftc};
 }});
 
 define({id: "c46284f3", outputs: ["columns","layout"], body: () => {
@@ -173,7 +160,7 @@ refreshView();
 <body>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:ccf8fe47:--></div>
+<div class="observablehq observablehq--block"><!--:79331f42:--></div>
 <div class="observablehq observablehq--block"><!--:c46284f3:--></div>
 <div class="observablehq observablehq--block"><!--:5ed40d69:--></div>
 <div class="observablehq observablehq--block"><!--:05e66ec1:--></div>
@@ -224,7 +211,7 @@ refreshView();
 </script>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-13T14:10:34">Apr 13, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-04-20T15:30:50">Apr 20, 2026</a>.</div>
 </footer>
 </div>
 </body>

@@ -5,8 +5,8 @@ import {
     layer
 } from 'npm:@fortawesome/fontawesome-svg-core';
 import {
-    faXmark,
-    faExclamation,
+    faQ,
+    faN,
     faCircle,
     faBuildingColumns
 } from 'npm:@fortawesome/free-solid-svg-icons';
@@ -39,13 +39,13 @@ const MARKER_CONFIG = {
     },
     "non-standard-qualified": {
         color: "#dc3545",
-        mark: faXmark,
+        mark: faQ,
         defaultMarkColor: "#1a1a1a",
         selectedMarkColor: "#dc3545"
     },
     "non-standard-unqualified": {
         color: "#ffc107",
-        mark: faExclamation,
+        mark: faN,
         defaultMarkColor: "#1a1a1a",
         selectedMarkColor: "#1a1a1a"
     }
@@ -361,22 +361,22 @@ export function updateFilterAndRefresh(fieldName, selectedValues, filterState, r
 // Nature value groups: which Nature columns belong to each finding type
 const NATURE_GROUPS = [
     {
-        label: "Number of councils with qualified audit opinions",
+        label: "Type of qualified audit opinions",
         columns: ["Nature 1", "Nature 2", "Nature 3"],
         typeColumns: [],
     },
     {
-        label: "Number of councils with emphasis of matter",
+        label: "Type of emphasis of matter",
         columns: ["Nature 4", "Nature 5", "Nature 6"],
         typeColumns: [],
     },
     {
-        label: "Number of councils with other matter paragraph",
+        label: "Type of other matter paragraph",
         columns: [],
         typeColumns: ["Type 8"],
     },
     {
-        label: "Number of councils with key audit matters",
+        label: "Type of key audit matters",
         columns: [],
         typeColumns: ["Type 7"],
     },
@@ -453,8 +453,9 @@ function createGroupedNatureFilter(filteredData, allData, filterState, onSelecti
         heading.appendChild(headingCount);
         container.appendChild(heading);
 
-        // Sort values by count descending
-        const sortedValues = Array.from(allValues.entries()).sort((a, b) => b[1] - a[1]);
+        // Sort values alphabetically (case-insensitive)
+        const sortedValues = Array.from(allValues.entries())
+            .sort((a, b) => a[0].localeCompare(b[0], undefined, { sensitivity: 'base' }));
 
         // Create checkbox rows
         sortedValues.forEach(([value, count]) => {
@@ -680,7 +681,7 @@ function createDefaultIcon(category) {
             if (config.mark) {
                 push(icon(config.mark, {
                     transform: {
-                        size: 24,
+                        size: 18,
                         x: 12,
                         y: -16
                     },
@@ -729,7 +730,7 @@ function createSelectedIcon(category) {
             if (config.mark) {
                 push(icon(config.mark, {
                     transform: {
-                        size: 24,
+                        size: 18,
                         x: 12,
                         y: -16
                     },
